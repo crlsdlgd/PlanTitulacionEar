@@ -8,7 +8,7 @@ import ec.edu.uce.planTitulacion.ejb.dao.UsuarioDao;
 import ec.edu.uce.planTitulacion.ejb.dto.Plan;
 import ec.edu.uce.planTitulacion.ejb.dto.PlanUsuario;
 import ec.edu.uce.planTitulacion.ejb.dto.Rol;
-import ec.edu.uce.planTitulacion.ejb.dto.RolUsuario;
+import ec.edu.uce.planTitulacion.ejb.dto.UsuarioRol;
 import ec.edu.uce.planTitulacion.ejb.dto.Usuario;
 import ec.edu.uce.planTitulacion.ejb.servicios.VerificarRecaptcha;
 import ec.edu.uce.planTitulacion.jsf.managedBean.sesion.SesionUsuarioBean;
@@ -47,7 +47,7 @@ public class ControladorUsuario implements Serializable {
     private String nick, password, nombre, cedula, correo, password2;
     private String rolSelect;
     private Rol usuarioPrecursorRol;
-    private List<RolUsuario> listaIntegrantes;
+    private List<UsuarioRol> listaIntegrantes;
 
     public String login() throws Exception {
         String ecripted = DigestUtils.md5Hex(password);
@@ -67,52 +67,27 @@ public class ControladorUsuario implements Serializable {
                     
                     FacesContext context = FacesContext.getCurrentInstance();
                     SesionUsuarioBean sesion = context.getApplication().evaluateExpressionGet(context, "#{sesionUsuarioBean}", SesionUsuarioBean.class);
-                    
                     this.listaRolUser = new ArrayList<String>();
                     List<Rol> lista = rolDao.buscarRolByUser(user);
-
                     for(int i=0;i<lista.size();i++){
-                        if (lista.get(i).getIdRol() == RolConstantes.ROL_BD_ESTUDIANTE_VALUE) {
+                        if (lista.get(i).getRolId() == RolConstantes.ROL_BD_ESTUDIANTE_VALUE) {
                             sesion.setEstudiante(true);
-                        } else if (lista.get(i).getIdRol() == RolConstantes.ROL_BD_DOCENTE_VALUE) {
+                        } else if (lista.get(i).getRolId() == RolConstantes.ROL_BD_DOCENTE_VALUE) {
                             sesion.setDocente(true);
-                        } else if (lista.get(i).getIdRol() == RolConstantes.ROL_BD_CONSEJO_VALUE) {
+                        } else if (lista.get(i).getRolId() == RolConstantes.ROL_BD_CONSEJO_VALUE) {
                             sesion.setConsejo(true);
                         }
                     }
-                    
                     for (int i = 0; i < lista.size(); i++) {
-                        this.listaRolUser.add(lista.get(i).getRol());
+                        this.listaRolUser.add(lista.get(i).getRolDescripcion());
                     }
                     this.setListaRolUser(listaRolUser);
-//                    rolSelect = listaRolUser.get(0);
-//                    RequestContext.getCurrentInstance().execute("PF('wlgRol').show();");
+
                     redireccion = "irPrincipal";
                 }
             }
         } catch (Exception e) {
         }
-
-//        try {
-//            if (usr == null) {
-//                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuario y/o Contraseña incorrectos", null));
-//            } else {
-//                this.user = usr;
-//                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", usr);
-//
-//                this.listaRolUser = new ArrayList<String>();
-//                List<Rol> lista = rolDao.buscarRolByUser(user);
-//
-//                for (int i = 0; i < lista.size(); i++) {
-//                    this.listaRolUser.add(lista.get(i).getRol());
-//                }
-//                this.setListaRolUser(listaRolUser);
-//                rolSelect = listaRolUser.get(0);
-//                RequestContext.getCurrentInstance().execute("PF('wlgRol').show();");
-//            }
-//        } catch (IOException e) {
-//        }
-
         return redireccion;
     }
 
@@ -165,59 +140,6 @@ public class ControladorUsuario implements Serializable {
 
     public void guardarProyecto() throws Exception {
         planUsuarioDao.guardarProyecto(getListaPostulantes());
-    }
-
-    public void verificarCatpchaRegistro() {
-        System.out.println("verificarCaptcha pass: "+password);
-        try {
-            String gRecaptchaResponse = FacesContext.getCurrentInstance().
-                    getExternalContext().getRequestParameterMap().get("g-recaptcha-response");
-            boolean verify = VerificarRecaptcha.verificar(gRecaptchaResponse);
-            if (verify) {
-                System.out.println("Captcha correcto");
-                RequestContext.getCurrentInstance().execute("PF('wlgRegistro').show();");
-            } else {
-                System.out.println("Captcha incorrecto");
-            }
-        } catch (Exception e) {
-
-        }
-    }
-
-    public String guardarUsuario() throws Exception {
-
-        System.out.println("di algo "+password);
-
-        String aux = "";
-        boolean flag = false;
-
-        if (password.equals(password2)) {
-            String encripted = DigestUtils.md5Hex(password);
-            password = encripted;
-            System.out.println("1......." + password);
-            Usuario usuario = new Usuario();
-            usuario.setNombre(nombre);
-            usuario.setEmail(correo);
-            usuario.setCedula(cedula);
-            usuario.setPassword(password);
-            flag = usuarioDao.registrar(usuario);
-            System.out.println("1.1......se registro");
-        } else {
-            System.out.println("2......." + password);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Las contraseñas no coinciden", null);
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-        if (flag) {
-            addMessage("Registro Exitoso!");
-            aux = "inicio";
-            System.out.println("3.......yea" + password);
-        } else {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Existe un error en su número de Cédula o Correo", null);
-            FacesContext.getCurrentInstance().addMessage(null, message);
-            System.out.println("4.......mal" + password);
-        }
-
-        return aux;
     }
 
     public void addMessage(String summary) {
@@ -325,11 +247,11 @@ public class ControladorUsuario implements Serializable {
         this.listaPostulantes = listaPostulantes;
     }
 
-    public List<RolUsuario> getListaIntegrantes() {
+    public List<UsuarioRol> getListaIntegrantes() {
         return listaIntegrantes;
     }
 
-    public void setListaIntegrantes(List<RolUsuario> listaIntegrantes) {
+    public void setListaIntegrantes(List<UsuarioRol> listaIntegrantes) {
         this.listaIntegrantes = listaIntegrantes;
     }
 }

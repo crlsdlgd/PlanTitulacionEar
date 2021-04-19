@@ -21,9 +21,9 @@ public class PlanDaoImpl extends DAO implements PlanDao {
     public void registrar(Plan plan) throws Exception {
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (tema,fecha) VALUES(?,?)");
-            st.setString(1, plan.getTema());
-            st.setDate(2, (Date) plan.getFecha());
+            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema,pln_fecha) VALUES(?,?)");
+            st.setString(1, plan.getPlnTema());
+            st.setDate(2, (Date) plan.getPlnFecha());
             st.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -38,14 +38,14 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT id_plan, tema, fecha FROM plan ");
+            PreparedStatement st = this.getCn().prepareCall("SELECT pln_id, pln_tema, pln_fecha FROM plan ");
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setFecha(rs.getDate("fecha"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnFecha(rs.getDate("pln_fecha"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -62,14 +62,14 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT id_plan, tema, fecha FROM plan WHERE aprobado = 'TRUE' ");
+            PreparedStatement st = this.getCn().prepareCall("SELECT pln_id, pln_tema, pln_fecha FROM plan WHERE pln_aprobado = 'TRUE' ");
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setFecha(rs.getDate("fecha"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnFecha(rs.getDate("pln_fecha"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -81,33 +81,33 @@ public class PlanDaoImpl extends DAO implements PlanDao {
     }
 
     @Override
-    public List<Plan> listarPlanesNoAprobadosNiPostulados(Usuario user) throws Exception {
+    public List<Plan> listarPlanesNoAprobadosNiplus_postulados(Usuario user) throws Exception {
         List<Plan> lista;
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.id_plan, p.tema, p.detalle, p.propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
-                    + "WHERE p.id_plan=pu.id_plan AND\n"
-                    + "p.aprobado='FALSE' AND\n"
-                    + "pu.postulado='FALSE' AND\n"
-                    + "pu.id_usuario!= ? AND\n"
-                    + "p.propuesto_por!= ?\n"
-                    + "EXCEPT (SELECT p.id_plan, p.tema, p.detalle, p.propuesto_por \n"
+                    + "WHERE p.pln_id=pu.pln_id AND\n"
+                    + "p.pln_aprobado='FALSE' AND\n"
+                    + "pu.plus_postulado='FALSE' AND\n"
+                    + "pu.usr_id!= ? AND\n"
+                    + "p.pln_propuesto_por!= ?\n"
+                    + "EXCEPT (SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
-                    + "WHERE pu.id_plan=p.id_plan AND\n"
-                    + "pu.id_usuario =?)");
-            st.setInt(1, user.getIdUsuario());
-            st.setInt(2, user.getIdUsuario());
-            st.setInt(3, user.getIdUsuario());
+                    + "WHERE pu.pln_id=p.pln_id AND\n"
+                    + "pu.usr_id =?)");
+            st.setInt(1, user.getUsrId());
+            st.setInt(2, user.getUsrId());
+            st.setInt(3, user.getUsrId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setDetalle(rs.getString("detalle"));
-                plan.setPropuestoPor(rs.getInt("propuesto_por"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -123,13 +123,13 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT id_plan, tema, fecha FROM plan WHERE id_plan = ? ");
+            PreparedStatement st = this.getCn().prepareCall("SELECT pln_id, pln_tema, pln_fecha FROM plan WHERE pln_id = ? ");
             st.setInt(1, idPlan);
             rs = st.executeQuery();
             while (rs.next()) {
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setFecha(rs.getDate("fecha"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnFecha(rs.getDate("pln_fecha"));
             }
         } catch (Exception e) {
             throw e;
@@ -145,19 +145,19 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.id_plan, p.tema, p.fecha\n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_fecha\n"
                     + "FROM plan p, usuario u, plan_usuario pu\n"
-                    + "WHERE p.id_plan= pu.id_plan AND\n"
-                    + "pu.id_usuario = u.id_usuario AND u.id_usuario=?");
+                    + "WHERE p.pln_id= pu.pln_id AND\n"
+                    + "pu.usr_id = u.usr_id AND u.usr_id=?");
 
-            st.setInt(1, usuario.getIdUsuario());
+            st.setInt(1, usuario.getUsrId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setFecha(rs.getDate("fecha"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("tema"));
+                plan.setPlnFecha(rs.getDate("fecha"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -174,37 +174,40 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             this.getCn().setAutoCommit(false);
-            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (tema,fecha) VALUES(?,?)");
+            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema,pln_fecha) VALUES(?,?)");
             st.setString(1, tema);
             st.setDate(2, (Date) fecha);
             st.executeUpdate();
             st.close();
 
-            PreparedStatement st2 = this.getCn().prepareStatement("SELECT MAX(id_plan) AS id_plan FROM plan");
+            PreparedStatement st2 = this.getCn().prepareStatement("SELECT MAX(pln_id) AS pln_id FROM plan");
             ResultSet rs;
             int idPlan = 0;
             rs = st2.executeQuery();
             while (rs.next()) {
-                idPlan = rs.getInt("id_plan");
+                idPlan = rs.getInt("pln_id");
             }
             rs.close();
             st2.close();
 
-            PreparedStatement st5 = this.getCn().prepareStatement("INSERT INTO plan_usuario (id_plan, id_usuario) VALUES(?,?)");
+            PreparedStatement st5 = this.getCn().prepareStatement("INSERT INTO plan_usuario (pln_id, usr_id) VALUES(?,?)");
             st5.setInt(1, idPlan);
-            st5.setInt(2, user.getIdUsuario());
+            st5.setInt(2, user.getUsrId());
             st5.executeUpdate();
             st5.close();
 
             List<Usuario> listUsuario = new ArrayList();
             for (int i = 0; i < listIntegrantes.size(); i++) {
-                PreparedStatement st3 = this.getCn().prepareStatement("SELECT id_usuario FROM usuario WHERE nombre = ?");
+                PreparedStatement st3 = this.getCn().prepareStatement("SELECT u.usr_id \n"
+                        + "FROM usuario u, persona pe\n"
+                        + "WHERE u.prs_id=pe.prs_id AND\n"
+                        + "pe.prs_nombres=?");
                 ResultSet rs2;
                 st3.setString(1, listIntegrantes.get(i));
                 rs2 = st3.executeQuery();
                 while (rs2.next()) {
                     Usuario usuario = new Usuario();
-                    usuario.setIdUsuario(rs2.getInt("id_usuario"));
+                    usuario.setUsrId(rs2.getInt("usr_id"));
                     listUsuario.add(usuario);
                 }
                 rs2.close();
@@ -212,9 +215,9 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             }
 
             for (int i = 0; i < listUsuario.size(); i++) {
-                PreparedStatement st4 = this.getCn().prepareStatement("INSERT INTO plan_usuario (id_plan,id_usuario) VALUES (?,?)");
+                PreparedStatement st4 = this.getCn().prepareStatement("INSERT INTO plan_usuario (pln_id,usr_id) VALUES (?,?)");
                 st4.setInt(1, idPlan);
-                st4.setInt(2, listUsuario.get(i).getIdUsuario());
+                st4.setInt(2, listUsuario.get(i).getUsrId());
                 st4.executeUpdate();
                 st4.close();
             }
@@ -241,11 +244,11 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             String fechaPlan = "";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqq: " + lista.get(i).getFecha());
-                fechaPlan = sdf.format(lista.get(i).getFecha());
-                caso = tipoEmail(lista2.get(i).getFecha());
-                lista.get(i).setFecha(sdf.parse(fechaPlan));
-                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqq2222222: " + lista.get(i).getFecha());
+                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqq: " + lista.get(i).getPlnFecha());
+                fechaPlan = sdf.format(lista.get(i).getPlnFecha());
+                caso = tipoEmail(lista2.get(i).getPlnFecha());
+                lista.get(i).setPlnFecha(sdf.parse(fechaPlan));
+                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqq2222222: " + lista.get(i).getPlnFecha());
                 switch (caso) {
                     case 1:
                         System.out.println("paso x aqui!!!");
@@ -307,26 +310,26 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             this.getCn().setAutoCommit(false);
-            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (tema,detalle,propuesto_por, aprobado) VALUES(?,?,?,FALSE)");
+            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema, pln_detalle, pln_propuesto_por, pln_aprobado) VALUES(?,?,?,FALSE)");
             st.setString(1, txtTema);
             st.setString(2, txtDetalle);
-            st.setInt(3, user.getIdUsuario());
+            st.setInt(3, user.getUsrId());
             st.executeUpdate();
             st.close();
 
-            PreparedStatement st2 = this.getCn().prepareStatement("SELECT MAX(id_plan) AS id_plan FROM plan");
+            PreparedStatement st2 = this.getCn().prepareStatement("SELECT MAX(pln_id) AS pln_id FROM plan");
             ResultSet rs;
             int idPlan = 0;
             rs = st2.executeQuery();
             while (rs.next()) {
-                idPlan = rs.getInt("id_plan");
+                idPlan = rs.getInt("pln_id");
             }
             rs.close();
             st2.close();
 
-            PreparedStatement st3 = this.getCn().prepareStatement("INSERT INTO plan_usuario (id_plan, id_usuario, postulado) VALUES(?,?,FALSE)");
+            PreparedStatement st3 = this.getCn().prepareStatement("INSERT INTO plan_usuario (pln_id, usr_id, plus_postulado) VALUES(?,?,FALSE)");
             st3.setInt(1, idPlan);
-            st3.setInt(2, user.getIdUsuario());
+            st3.setInt(2, user.getUsrId());
             st3.executeUpdate();
             st3.close();
             this.getCn().commit();
@@ -345,9 +348,9 @@ public class PlanDaoImpl extends DAO implements PlanDao {
 
             this.Conectar();
             this.getCn().setAutoCommit(false);
-            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan_usuario (id_plan,id_usuario,postulado) VALUES(?,?,FALSE)");
-            st.setInt(1, plan.getIdPlan());
-            st.setInt(2, user.getIdUsuario());
+            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan_usuario (pln_id,usr_id, plus_postulado) VALUES(?,?,FALSE)");
+            st.setInt(1, plan.getPlnId());
+            st.setInt(2, user.getUsrId());
             st.executeUpdate();
             st.close();
             this.getCn().commit();
@@ -365,22 +368,21 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.id_plan, p.tema, p.detalle, p.propuesto_por"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por"
                     + " FROM plan p, plan_usuario pu\n"
-                    + "WHERE p.id_plan=pu.id_plan AND\n"
-                    + "p.aprobado='FALSE' AND\n"
-                    + "p.listo='FALSE' AND\n"
-                    + "pu.id_usuario=?");
+                    + "WHERE p.pln_id=pu.pln_id AND\n"
+                    + "p.pln_aprobado='FALSE' AND\n"
+                    + "pu.usr_id=?");
 
-            st.setInt(1, usuario.getIdUsuario());
+            st.setInt(1, usuario.getUsrId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setDetalle(rs.getString("detalle"));
-                plan.setPropuestoPor(rs.getInt("propuesto_por"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -398,21 +400,21 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.id_plan, p.tema, p.detalle, p.propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
-                    + "WHERE p.id_plan=pu.id_plan AND\n"
-                    + "p.aprobado='TRUE' AND\n"
-                    + "pu.id_usuario=?");
+                    + "WHERE p.pln_id=pu.pln_id AND\n"
+                    + "p.pln_aprobado='TRUE' AND\n"
+                    + "pu.usr_id=?");
 
-            st.setInt(1, usuario.getIdUsuario());
+            st.setInt(1, usuario.getUsrId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setDetalle(rs.getString("detalle"));
-                plan.setPropuestoPor(rs.getInt("propuesto_por"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -429,9 +431,9 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("UPDATE plan \n"
-                    + "SET listo = TRUE\n"
-                    + "WHERE id_plan= ? ");
-            st.setInt(1, plan.getIdPlan());
+                    + "SET pln_listo = TRUE\n"
+                    + "WHERE pln_id= ? ");
+            st.setInt(1, plan.getPlnId());
             st.executeUpdate();
             st.close();
         } catch (Exception e) {
@@ -441,15 +443,15 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         }
 
     }
-    
+
     @Override
     public void noListoRevision(Plan plan) throws Exception {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("UPDATE plan \n"
-                    + "SET listo = FALSE\n"
-                    + "WHERE id_plan= ? ");
-            st.setInt(1, plan.getIdPlan());
+                    + "SET pln_listo = FALSE\n"
+                    + "WHERE pln_id= ? ");
+            st.setInt(1, plan.getPlnId());
             st.executeUpdate();
             st.close();
         } catch (Exception e) {
@@ -461,27 +463,27 @@ public class PlanDaoImpl extends DAO implements PlanDao {
     }
 
     @Override
-    public List<Plan> cargarPlanesPorAprobar(Usuario user) throws Exception{
+    public List<Plan> cargarPlanesPorAprobar(Usuario user) throws Exception {
         List<Plan> lista;
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.id_plan, p.tema, p.detalle, p.propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
-                    + "WHERE p.id_plan=pu.id_plan AND\n"
-                    + "p.aprobado='FALSE' AND\n"
-                    + "p.listo='TRUE' AND\n"
-                    + "pu.id_usuario=?");
+                    + "WHERE p.pln_id=pu.pln_id AND\n"
+                    + "p.pln_aprobado='FALSE' AND\n"
+                    + "p.pln_listo='TRUE' AND\n"
+                    + "pu.usr_id=?");
 
-            st.setInt(1, user.getIdUsuario());
+            st.setInt(1, user.getUsrId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setDetalle(rs.getString("detalle"));
-                plan.setPropuestoPor(rs.getInt("propuesto_por"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -497,9 +499,9 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("UPDATE plan \n"
-                    + "SET listo = FALSE, aprobado= TRUE, observaciones='N/A'\n"
-                    + "WHERE id_plan= ? ");
-            st.setInt(1, plan.getIdPlan());
+                    + "SET pln_listo = FALSE, pln_aprobado= TRUE, pln_observaciones='N/A'\n"
+                    + "WHERE pln_id= ? ");
+            st.setInt(1, plan.getPlnId());
             st.executeUpdate();
             st.close();
         } catch (Exception e) {
@@ -515,17 +517,17 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT id_plan, tema, detalle, propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT pln_id, pln_tema, pln_detalle, pln_propuesto_por \n"
                     + "FROM plan p\n"
-                    + "WHERE listo='TRUE'");
+                    + "WHERE pln_listo='TRUE'");
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Plan plan = new Plan();
-                plan.setIdPlan(rs.getInt("id_plan"));
-                plan.setTema(rs.getString("tema"));
-                plan.setDetalle(rs.getString("detalle"));
-                plan.setPropuestoPor(rs.getInt("propuesto_por"));
+                plan.setPlnId(rs.getInt("pln_id"));
+                plan.setPlnTema(rs.getString("pln_tema"));
+                plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
         } catch (Exception e) {
@@ -541,10 +543,10 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("UPDATE plan \n"
-                    + "SET listo = FALSE, observaciones= ?\n"
-                    + "WHERE id_plan= ? ");
-            st.setString(1, plan.getObservaciones());
-            st.setInt(2, plan.getIdPlan());
+                    + "SET pln_listo = FALSE, pln_observaciones= ?\n"
+                    + "WHERE pln_id= ? ");
+            st.setString(1, plan.getPlnObservaciones());
+            st.setInt(2, plan.getPlnId());
             st.executeUpdate();
             st.close();
         } catch (Exception e) {
@@ -553,5 +555,5 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             this.Cerrar();
         }
     }
-    
+
 }

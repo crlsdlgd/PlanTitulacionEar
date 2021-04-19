@@ -1,9 +1,10 @@
 package ec.edu.uce.planTitulacion.ejb.impl;
 
 import ec.edu.uce.planTitulacion.ejb.dao.RolUsuarioDao;
+import ec.edu.uce.planTitulacion.ejb.dto.Persona;
 import ec.edu.uce.planTitulacion.ejb.dto.Plan;
 import ec.edu.uce.planTitulacion.ejb.dto.Rol;
-import ec.edu.uce.planTitulacion.ejb.dto.RolUsuario;
+import ec.edu.uce.planTitulacion.ejb.dto.UsuarioRol;
 import ec.edu.uce.planTitulacion.ejb.dto.Usuario;
 import ec.edu.uce.planTitulacion.ejb.jdbc.impl.DAO;
 import java.sql.PreparedStatement;
@@ -16,32 +17,37 @@ import javax.ejb.Stateless;
 public class RolUsuarioDaoImpl extends DAO implements RolUsuarioDao {
 
     @Override
-    public List<RolUsuario> listarIntegrantesByPlan(Plan plan) throws Exception {
-        List<RolUsuario> lista;
+    public List<UsuarioRol> listarIntegrantesByPlan(Plan plan) throws Exception {
+        List<UsuarioRol> lista;
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT u.id_usuario, u.nombre, u.email, pu.postulado, r.id_rol, r.rol\n"
-                    + "FROM usuario u, plan_usuario pu, plan p, rol r, rol_usuario ru\n"
-                    + "WHERE pu.id_usuario=u.id_usuario  AND\n"
-                    + "pu.id_plan=p.id_plan AND\n"
-                    + "ru.id_usuario=u.id_usuario  AND\n"
-                    + "ru.id_rol=r.id_rol AND\n"
-                    + "p.aprobado='FALSE' AND\n"
-                    + "pu.postulado='TRUE' AND\n"
-                    + "p.id_plan=?");
-            st.setInt(1, plan.getIdPlan());
+            PreparedStatement st = this.getCn().prepareCall("SELECT u.usr_id, u.prs_id, pe.prs_primer_apellido, pe.prs_nombres, pe.prs_mail_institucional, pu.plus_postulado, r.rol_id, r.rol_descripcion\n"
+                    + "FROM usuario u, plan_usuario pu, plan p, rol r, usuario_rol ru, persona pe\n"
+                    + "WHERE pu.usr_id=u.usr_id  AND\n"
+                    + "pu.pln_id=p.pln_id AND\n"
+                    + "ru.usr_id=u.usr_id AND\n"
+                    + "ru.rol_id=r.rol_id AND\n"
+                    + "u.prs_id=pe.prs_id AND\n"
+                    + "p.pln_aprobado='FALSE' AND\n"
+                    + "pu.plus_postulado='TRUE' AND\n"
+                    + "p.pln_id=?");
+            st.setInt(1, plan.getPlnId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Usuario user = new Usuario();
                 Rol rol = new Rol();
-                RolUsuario rolUser = new RolUsuario();
-                user.setIdUsuario(rs.getInt("id_usuario"));
-                user.setNombre(rs.getString("nombre"));
-                user.setEmail(rs.getString("email"));
-                rol.setIdRol(rs.getInt("id_rol"));
-                rol.setRol(rs.getString("rol"));
+                Persona person = new Persona();
+                UsuarioRol rolUser = new UsuarioRol();
+                user.setUsrId(rs.getInt("usr_id"));
+                person.setPrsId(rs.getInt("prs_id"));
+                person.setPrsPrimerApellido(rs.getString("prs_primer_apellido"));
+                person.setPrsNombres(rs.getString("prs_nombres"));
+                person.setPrsMailInstitucional(rs.getString("prs_mail_institucional"));
+                user.setUsrPersona(person);
+                rol.setRolId(rs.getInt("rol_id"));
+                rol.setRoldescripcion(rs.getString("rol_descripcion"));
                 rolUser.setUsuario(user);
                 rolUser.setRol(rol);
                 lista.add(rolUser);

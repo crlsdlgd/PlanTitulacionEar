@@ -1,32 +1,32 @@
 package ec.edu.uce.planTitulacion.ejb.dto;
 
 public class PlanUsuario {
-    private Plan plan;
-    private Usuario usuario;
-    private boolean postulado;
+    private Plan plnId;
+    private Usuario usrId;
+    private boolean plusPostulado;
 
-    public Plan getPlan() {
-        return plan;
+    public Plan getPlnId() {
+        return plnId;
     }
 
-    public void setPlan(Plan plan) {
-        this.plan = plan;
+    public void setPlnId(Plan plnId) {
+        this.plnId = plnId;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuario getUsrId() {
+        return usrId;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsrId(Usuario usrId) {
+        this.usrId = usrId;
     }
 
-    public boolean isPostulado() {
-        return postulado;
+    public boolean isPlusPostulado() {
+        return plusPostulado;
     }
 
-    public void setPostulado(boolean postulado) {
-        this.postulado = postulado;
+    public void setPlusPostulado(boolean plusPostulado) {
+        this.plusPostulado = plusPostulado;
     }
     
     

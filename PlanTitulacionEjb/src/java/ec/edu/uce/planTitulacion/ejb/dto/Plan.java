@@ -3,65 +3,77 @@ package ec.edu.uce.planTitulacion.ejb.dto;
 import java.util.Date;
 
 public class Plan {
-    private Integer idPlan,propuestoPor;
-    private String tema,detalle,observaciones;
-    private Date fecha;
-    private boolean aprobado;
+    private Integer plnId;
+    private Integer plnPropuestoPor;
+    private String plnTema;
+    private String plnDetalle;
+    private String plnObservaciones;
+    private Date plnFecha;
+    private boolean plnAprobado;
+    private String plnEstado;
+
+    public String getPlnEstado() {
+        return plnEstado;
+    }
+
+    public void setPlnEstado(String plnEstado) {
+        this.plnEstado = plnEstado;
+    }
     
-    public String getObservaciones() {
-        return observaciones;
+    public String getPlnObservaciones() {
+        return plnObservaciones;
     }
 
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
+    public void setPlnObservaciones(String plnObservaciones) {
+        this.plnObservaciones = plnObservaciones;
     }
     
 
-    public Integer getPropuestoPor() {
-        return propuestoPor;
+    public Integer getPlnPropuestoPor() {
+        return plnPropuestoPor;
     }
 
-    public void setPropuestoPor(Integer propuestoPor) {
-        this.propuestoPor = propuestoPor;
+    public void setPlnPropuestoPor(Integer plnPropuestoPor) {
+        this.plnPropuestoPor = plnPropuestoPor;
     }
 
-    public String getDetalle() {
-        return detalle;
+    public String getPlnDetalle() {
+        return plnDetalle;
     }
 
-    public void setDetalle(String detalle) {
-        this.detalle = detalle;
+    public void setPlnDetalle(String plnDetalle) {
+        this.plnDetalle = plnDetalle;
     }
 
-    public boolean isAprobado() {
-        return aprobado;
+    public boolean isPlnAprobado() {
+        return plnAprobado;
     }
 
-    public void setAprobado(boolean aprobado) {
-        this.aprobado = aprobado;
+    public void setAprobado(boolean plnAprobado) {
+        this.plnAprobado = plnAprobado;
     }
 
-    public Integer getIdPlan() {
-        return idPlan;
+    public Integer getPlnId() {
+        return plnId;
     }
 
-    public void setIdPlan(Integer idPlan) {
-        this.idPlan = idPlan;
+    public void setPlnId(Integer plnId) {
+        this.plnId = plnId;
     }
 
-    public String getTema() {
-        return tema;
+    public String getPlnTema() {
+        return plnTema;
     }
 
-    public void setTema(String tema) {
-        this.tema = tema;
+    public void setPlnTema(String plnTema) {
+        this.plnTema = plnTema;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Date getPlnFecha() {
+        return plnFecha;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setPlnFecha(Date plnFecha) {
+        this.plnFecha = plnFecha;
     }
 }

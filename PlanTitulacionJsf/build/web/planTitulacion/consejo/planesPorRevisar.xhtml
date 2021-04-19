@@ -25,10 +25,10 @@
                 <p:panel header="Planes de Tesis por revisar" >
                     <p:dataTable id="data" var="plan" value="#{controladorPlan.listaPlan}" >
                         <p:column headerText="Tema">
-                            <h:outputText value="#{plan.tema}"/>
+                            <h:outputText value="#{plan.plnTema}"/>
                         </p:column>
                         <p:column headerText="Detalle">
-                            <h:outputText value="#{plan.detalle}" />
+                            <h:outputText value="#{plan.plnDetalle}" />
                         </p:column>
                         <p:column headerText="Propuesto por">
                             <p:commandLink value="Ver Precursor" actionListener="#{controladorUsuario.verUsuarioPrecursor(plan)}" update=":dlgWare2"/>
@@ -46,9 +46,9 @@
 
             <p:dialog header="Precursor" widgetVar="wdlWare2" id="dlgWare2">
                 <h:form>
-                    <p:outputLabel value="Nombre: #{controladorUsuario.usuarioPrecursor.nombre}" />
+                    <p:outputLabel value="Nombre: #{controladorUsuario.usuarioPrecursor.usrPersona.prsNombres}" />
                     <br/>
-                    <p:outputLabel value="Función: #{controladorUsuario.usuarioPrecursorRol.rol}" />
+                    <p:outputLabel value="Función: #{controladorUsuario.usuarioPrecursorRol.rolDescripcion}" />
                 </h:form>
             </p:dialog>
 
@@ -56,10 +56,10 @@
                 <h:form>
                     <p:dataTable id="dataPostulantes" var="integrante" value="#{controladorUsuario.listaIntegrantes}">
                         <p:column  headerText="Integrantes">
-                            <p:outputLabel value="#{integrante.usuario.nombre}" />
+                            <p:outputLabel value="#{integrante.usuario.usrPersona.prsNombres} #{integrante.usuario.usrPersona.prsPrimerApellido}" />
                         </p:column>
                         <p:column  headerText="Rol">
-                            <p:outputLabel value="#{integrante.rol.rol}" />
+                            <p:outputLabel value="#{integrante.rol.rolDescripcion}" />
                         </p:column>
                     </p:dataTable>
 
@@ -79,7 +79,7 @@
 
             <p:dialog header="Observaciones" widgetVar="wdlWare5" id="dlgWare5" >
                 <h:form>
-                    <p:inputTextarea value="#{controladorPlan.plan.observaciones}" placeholder="Por favor ingrese las observaciones del por que este tema no fue aprobado" rows="6" cols="30"/>
+                    <p:inputTextarea value="#{controladorPlan.plan.plnObservaciones}" placeholder="Por favor ingrese las observaciones del por que este tema no fue aprobado" rows="6" cols="30"/>
                     <br/>
                     <p:commandButton value="Rechazar Tema" actionListener="#{controladorPlan.noAprobarTema()}" oncomplete="PF('wdlWare4').hide; PF('wdlWare5').hide;" update=":formu:growl" ajax="false"/>
                 </h:form>

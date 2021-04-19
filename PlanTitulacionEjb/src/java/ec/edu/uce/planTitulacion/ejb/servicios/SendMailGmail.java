@@ -185,14 +185,14 @@ public class SendMailGmail {
 
         // message info
         //String mailTo = user.getEmail();
-        String mailTo = user.getEmail();
+        String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
         String subject = "REGISTRO DE TEMA DE TESIS";
         StringBuffer body = new StringBuffer("<html><br>");
         body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
         body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
         //body.append(user.getNombre() + "<br>");
-        body.append("El día de hoy se ha registrado en el sistema de titulación el tema: " + plan.getTema() + " <br><br>");
-        body.append("A la Fecha: " + plan.getFecha() + "<br>");
+        body.append("El día de hoy se ha registrado en el sistema de titulación el tema: " + plan.getPlnTema() + " <br><br>");
+        body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
         body.append("Con el tutor: " + new Date() + "<br>");
         body.append("Recuerde que tiene seis meses para culminar este proyecto<br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
@@ -223,16 +223,16 @@ public class SendMailGmail {
         String port = properties.getProperty("mail.smtp.port");
 
         // message info
-        String mailTo = user.getEmail();
+        String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
         String subject = "RECORDATORIO DE TEMA DE TESIS";
         StringBuffer body = new StringBuffer("<html><br>");
         body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
         body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
         //body.append(user.getNombre() + "<br>");
         body.append("Le recordamos que usted consta en el sistema de titulación<br><br>");
-        body.append("A la Fecha: " + plan.getFecha() + "<br>");
+        body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
         body.append("Con el tutor: " + new Date() + "<br>");
-        body.append("Con el tema de: " + plan.getTema() + " <br><br><br>");
+        body.append("Con el tema de: " + plan.getPlnTema() + " <br><br><br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");
         body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
@@ -260,16 +260,16 @@ public class SendMailGmail {
 
         // message info
         //String mailTo = user.getEmail();
-        String mailTo = user.getEmail();
+        String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
         String subject = "RECORDATORIO DE TEMA DE TESIS";
         StringBuffer body = new StringBuffer("<html><br>");
         body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
         body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
         //body.append(user.getNombre() + "<br>");
         body.append("Le recordamos que usted consta en el sistema de titulación<br><br>");
-        body.append("A la Fecha: " + plan.getFecha() + "<br>");
+        body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
         body.append("Con el tutor: " + new Date() + "<br>");
-        body.append("Con el tema de: " + plan.getTema() + " <br>");
+        body.append("Con el tema de: " + plan.getPlnTema() + " <br>");
         body.append("Recuerde ya han culminado cinco meses desde el registro de su tema, le queda un mes para el control antiplagio. <br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");

@@ -2,57 +2,51 @@ package ec.edu.uce.planTitulacion.ejb.dto;
 
 public class Usuario {
     private Integer usrId;
-    private String nombre;
-    private String email;
+//    private String nombre;
+//    private String email;
+    private Persona usrPersona;
     private String usrPassword;
     private String usrNick;
     private String usrIdentificacion;
 
-    public String getCedula() {
+    
+    public Persona getUsrPersona() {
+        return usrPersona;
+    }
+
+    public void setUsrPersona(Persona usrPersona) {
+        this.usrPersona = usrPersona;
+    }
+    
+    public String getUsrIdentificacion() {
         return usrIdentificacion;
     }
 
-    public void setCedula(String cedula) {
-        this.usrIdentificacion = cedula;
+    public void setUsrIdentificacion(String usrIdentificacion) {
+        this.usrIdentificacion = usrIdentificacion;
     }
     
-    public Integer getIdUsuario() {
+    public Integer getUsrId() {
         return usrId;
     }
 
-    public void setIdUsuario(Integer idUsuario) {
-        this.usrId = idUsuario;
+    public void setUsrId(Integer usrId) {
+        this.usrId = usrId;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
+    public String getUsrPassword() {
         return usrPassword;
     }
 
-    public void setPassword(String password) {
-        this.usrPassword = password;
+    public void setUsrPassword(String usrPassword) {
+        this.usrPassword = usrPassword;
     }
 
-    public String getNick() {
+    public String getUsrNick() {
         return usrNick;
     }
 
-    public void setNick(String nick) {
-        this.usrNick = nick;
+    public void setUsrNick(String usrNick) {
+        this.usrNick = usrNick;
     }
 }

@@ -25,10 +25,10 @@
                 <p:panel header="Concretar tema de Tesís" >
                     <p:dataTable id="data" var="plan" value="#{controladorPlan.listaPlan}" >
                         <p:column headerText="Tema">
-                            <h:outputText value="#{plan.tema}"/>
+                            <h:outputText value="#{plan.plnTema}"/>
                         </p:column>
                         <p:column headerText="Detalle">
-                            <h:outputText value="#{plan.detalle}" />
+                            <h:outputText value="#{plan.plnDetalle}" />
                         </p:column>
                         <p:column headerText="Propuesto por">
                             <p:commandLink value="Ver Precursor" actionListener="#{controladorUsuario.verUsuarioPrecursor(plan)}" update=":dlgWare2"/>
@@ -46,9 +46,9 @@
 
             <p:dialog header="Precursor" widgetVar="wdlWare2" id="dlgWare2">
                 <h:form>
-                    <p:outputLabel value="Nombre: #{controladorUsuario.usuarioPrecursor.nombre}" />
+                    <p:outputLabel value="Nombre: #{controladorUsuario.usuarioPrecursor.usrPersona.prsNombres}" />
                     <br/>
-                    <p:outputLabel value="Función: #{controladorUsuario.usuarioPrecursorRol.rol}" />
+                    <p:outputLabel value="Función: #{controladorUsuario.usuarioPrecursorRol.rolDescripcion}" />
                 </h:form>
             </p:dialog>
 
@@ -56,13 +56,13 @@
                 <h:form class="centrar">
                     <p:dataTable id="dataPostulantes" var="postulante" value="#{controladorUsuario.listaPostulantes}">
                         <p:column  headerText="Postulantes">
-                            <p:outputLabel value="#{postulante.usuario.nombre}" />
+                            <p:outputLabel value="#{postulante.usrId.usrPersona.prsNombres} #{postulante.usrId.usrPersona.prsPrimerApellido}" />
                         </p:column>
                         <p:column  headerText="Acción">
                             
                             <h:panelGrid columns="2">
                                 <p:outputLabel value="Agregar este postulante al proyecto" id="lblPostulante" for="slcBBPostulante"/>
-                                <p:selectBooleanButton id="slcBBPostulante" onLabel="Si" offLabel="No" value="#{postulante.postulado}"/>
+                                <p:selectBooleanButton id="slcBBPostulante" onLabel="Si" offLabel="No" value="#{postulante.plusPostulado}"/>
                             </h:panelGrid>
                         </p:column>
                     </p:dataTable>

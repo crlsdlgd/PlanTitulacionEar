@@ -18,18 +18,18 @@ public class RolDaoImpl extends DAO implements RolDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT r.id_rol, r.rol\n"
-                    + "FROM rol r, usuario u, rol_usuario ru\n"
-                    + "WHERE ru.id_usuario = u.id_usuario AND\n"
-                    + "r.id_rol= ru.id_rol AND u.id_usuario= ? ");
+            PreparedStatement st = this.getCn().prepareCall("SELECT r.rol_id, r.rol_descripcion\n"
+                    + "FROM rol r, usuario u, usuario_rol ru\n"
+                    + "WHERE ru.usr_id = u.usr_id AND\n"
+                    + "r.rol_id= ru.rol_id AND u.usr_id= ? ");
 
-            st.setInt(1, user.getIdUsuario());
+            st.setInt(1, user.getUsrId());
             rs = st.executeQuery();
             lista = new ArrayList();
             while (rs.next()) {
                 Rol rol = new Rol();
-                rol.setIdRol(rs.getInt("id_rol"));
-                rol.setRol(rs.getString("rol"));
+                rol.setRolId(rs.getInt("rol_id"));
+                rol.setRoldescripcion(rs.getString("rol_descripcion"));
    
                 lista.add(rol);
             }

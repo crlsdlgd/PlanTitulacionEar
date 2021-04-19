@@ -1,22 +1,31 @@
 package ec.edu.uce.planTitulacion.ejb.dto;
 
 public class Rol {
-    private Integer idRol;
-    private String rol;
+    private Integer rolId;
+    private String rolDescripcion;
+    private Integer rolTipo;
 
-    public Integer getIdRol() {
-        return idRol;
+    public Integer getRolTipo() {
+        return rolTipo;
     }
 
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
+    public void setRolTipo(Integer rolTipo) {
+        this.rolTipo = rolTipo;
+    }
+    
+    public Integer getRolId() {
+        return rolId;
     }
 
-    public String getRol() {
-        return rol;
+    public void setRolId(Integer idRol) {
+        this.rolId = idRol;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public String getRolDescripcion() {
+        return rolDescripcion;
+    }
+
+    public void setRoldescripcion(String rolDescripcion) {
+        this.rolDescripcion = rolDescripcion;
     }
 }

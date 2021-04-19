@@ -20,5 +20,7 @@ public interface UsuarioDao {
 
     public Usuario buscarUsuarioPrecursor(Plan plan)throws Exception;
 
+    public boolean existeIdentificacion(String prsIdentificacion);
+
     
 }

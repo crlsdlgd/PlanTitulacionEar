@@ -47,8 +47,8 @@ public class ControladorPlan implements Serializable {
         listaPlan = planDao.listarPlanesAprobados();
     }
     
-    public void cargarPlanesNoAprobadosNiPostulados() throws Exception {
-        listaPlan = planDao.listarPlanesNoAprobadosNiPostulados(ControladorUsuario.user);
+    public void cargarPlanesNoAprobadosNiplus_postulados() throws Exception {
+        listaPlan = planDao.listarPlanesNoAprobadosNiplus_postulados(ControladorUsuario.user);
     }
 
     public void listarUsuarioByPlan(Plan plan) throws Exception {
