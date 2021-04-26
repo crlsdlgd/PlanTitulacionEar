@@ -1,7 +1,6 @@
 package ec.edu.uce.planTitulacion.jsf.managedBeans;
 
 import ec.edu.uce.planTitulacion.ejb.constantes.ConstantesSistema;
-import static ec.edu.uce.planTitulacion.ejb.constantes.ConstantesSistema.NO_DISCAPACIDAD_VALUE;
 import ec.edu.uce.planTitulacion.ejb.dao.EtniaDao;
 import ec.edu.uce.planTitulacion.ejb.dao.UbicacionDao;
 import ec.edu.uce.planTitulacion.ejb.dao.UsuarioDao;

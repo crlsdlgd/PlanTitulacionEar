@@ -16,14 +16,21 @@ public class ValidarCarnetDiscapacidad implements Validator {
     public void validate(FacesContext fc, UIComponent comp, Object valor) throws ValidatorException {
         String strValor = (String) valor;
         Integer discapacidad = (Integer) comp.getAttributes().get("discapacidad");
-        if (discapacidad == ConstantesSistema.SI_DISCAPACIDAD_VALUE) {
-            if ("".equals(strValor) || strValor == null) {
-                FacesMessage msg = new FacesMessage("Valor inválido");
-                msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-//                fc.addMessage(comp.getClientId(fc), msg);
-                throw new ValidatorException(msg);
+        boolean flag = false;
+        try {
+            if (discapacidad == ConstantesSistema.SI_DISCAPACIDAD_VALUE) {
+                if ("".equals(strValor) || strValor == null) {
+                    flag = true;
+                }
             }
+        } catch (Exception e) {
         }
+        if (flag) {
+            FacesMessage msg = new FacesMessage("Valor inválido");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            throw new ValidatorException(msg);
+        }
+
     }
 
 }

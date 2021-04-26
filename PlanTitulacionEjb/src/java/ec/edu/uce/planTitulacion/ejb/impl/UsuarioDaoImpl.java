@@ -56,10 +56,11 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
             rs.close();
             st2.close();
 
-            PreparedStatement st3 = this.getCn().prepareStatement("INSERT INTO usuario (usr_nick, usr_password, prs_id) VALUES(?,?,?)");
+            PreparedStatement st3 = this.getCn().prepareStatement("INSERT INTO usuario (usr_nick, usr_password, prs_id, usr_identificacion) VALUES(?,?,?,?)");
             st3.setString(1, nick);
             st3.setString(2, usuario.getUsrPassword());
             st3.setInt(3, prsId);
+            st3.setString(4, usuario.getUsrPersona().getPrsIdentificacion());
             st3.executeUpdate();
             st3.close();
 
@@ -159,15 +160,18 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
     public Usuario buscarUsuarioLogin(String nick, String pass) throws Exception {
         Usuario usuario;
         ResultSet rs;
+        String nickCorreo = sacarNick(nick);
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareCall("SELECT u.usr_id, u.prs_id, pe.prs_primer_apellido, pe.prs_nombres, pe.prs_mail_institucional, u.usr_nick \n"
                     + "FROM usuario u, persona pe \n"
                     + "WHERE u.prs_id=pe.prs_id \n"
-                    + "AND usr_nick = ? \n"
-                    + "AND usr_password = ? ");
+                    + "AND (usr_nick = ? OR usr_identificacion = ? OR usr_nick = ?)\n"
+                    + "AND usr_password = ?");
             st.setString(1, nick);
-            st.setString(2, pass);
+            st.setString(2, nick);
+            st.setString(3, nickCorreo);
+            st.setString(4, pass);
             rs = st.executeQuery();
             usuario = new Usuario();
 
@@ -262,17 +266,17 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
     public boolean existeIdentificacion(String prsIdentificacion) {
         boolean flag = false;
         ResultSet rs;
-        int usr_id=-1;
+        int usr_id = -1;
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareCall("SELECT prs_id FROM persona WHERE prs_identificacion = ?");
             st.setString(1, prsIdentificacion);
             rs = st.executeQuery();
-            while(rs.next()){
-                usr_id=(rs.getInt("prs_id"));
+            while (rs.next()) {
+                usr_id = (rs.getInt("prs_id"));
             }
-            if(usr_id==-1){
-                flag=true;
+            if (usr_id == -1) {
+                flag = true;
             }
         } catch (Exception e) {
 

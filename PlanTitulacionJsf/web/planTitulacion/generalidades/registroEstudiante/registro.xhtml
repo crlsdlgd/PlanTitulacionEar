@@ -259,7 +259,7 @@
                                             <p:outputLabel value="Telefono: " id="lblTelefono" for="inpTelefono"/>
                                         </ui:define>
                                         <ui:define name="valor">
-                                            <p:inputText value="#{controladorRegistro.prsTelefono}" id="inpTelefono" required="true" requiredMessage="#{generalesConstantesForm.msgCampoRequerido}"> 
+                                            <p:inputText value="#{controladorRegistro.prsTelefono}" id="inpTelefono" required="true" requiredMessage="#{generalesConstantesForm.msgCampoRequerido}" validator="validarTelefono"> 
                                                 <p:ajax event="blur" update="msgTelefono, lblTelefono, inpTelefono"/>
                                             </p:inputText> 
                                         </ui:define>
@@ -349,10 +349,10 @@
                                             <p:outputLabel value="Contraseña: " id="lblPassword" for="inpPassword"/>
                                         </ui:define>
                                         <ui:define name="valor">
-                                            <p:password value="#{controladorRegistro.usrPassword}" id="inpPassword" required="true" requiredMessage="#{generalesConstantesForm.msgCampoRequerido}"/> 
+                                            <p:password value="#{controladorRegistro.usrPassword}" id="inpPassword" required="true" requiredMessage="#{generalesConstantesForm.msgCampoRequerido}" validator="validarContrasena"/> 
                                         </ui:define>
                                         <ui:define name="etiquetaError">
-                                            <p:messages id="msgPassword" for="inpPassword" autoUpdate="true"/>
+                                            <p:messages id="msgPassword" for="inpPassword" autoUpdate="true" style="width: 200px"/>
                                         </ui:define>
 
                                     </ui:decorate>
