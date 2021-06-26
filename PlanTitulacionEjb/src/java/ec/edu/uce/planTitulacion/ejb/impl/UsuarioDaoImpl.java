@@ -1,6 +1,7 @@
 package ec.edu.uce.planTitulacion.ejb.impl;
 
 import static ec.edu.uce.planTitulacion.ejb.constantes.ConstantesSistema.TIPO_IDENTIFICACION_CEDULA_VALUE;
+import ec.edu.uce.planTitulacion.ejb.constantes.RolConstantes;
 import static ec.edu.uce.planTitulacion.ejb.constantes.RolConstantes.ROL_BD_ESTUDIANTE_LABEL;
 import static ec.edu.uce.planTitulacion.ejb.constantes.RolConstantes.ROL_BD_ESTUDIANTE_VALUE;
 import ec.edu.uce.planTitulacion.ejb.dao.UsuarioDao;
@@ -126,12 +127,13 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
         List<Usuario> lista;
         ResultSet rs;
         try {
+
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT u.usr_id, u.prs_id, pe.prs_primer_apellido, pe.prs_nombres, pe.prs_mail_institucional, u.usr_nick \n"
-                    + "FROM usuario u, persona pe \n"
-                    + "WHERE u.prs_id=pe.prs_id \n"
-                    + "AND usr_nick = ? \n"
-                    + "AND usr_password = ? ");
+            PreparedStatement st = this.getCn().prepareCall("SELECT u.usr_id, u.prs_id, pe.prs_primer_apellido, pe.prs_nombres, pe.prs_mail_institucional,pe.prs_mail_personal, u.usr_nick\n"
+                    + "FROM plan p, usuario u, plan_usuario pu, persona pe\n"
+                    + "WHERE pu.usr_id = u.usr_id AND\n"
+                    + "u.prs_id=pe.prs_id AND\n"
+                    + "p.pln_id= pu.pln_id AND p.pln_id=?");
 
             st.setInt(1, plan.getPlnId());
             rs = st.executeQuery();
@@ -144,6 +146,7 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
                 person.setPrsPrimerApellido(rs.getString("prs_primer_apellido"));
                 person.setPrsNombres(rs.getString("prs_nombres"));
                 person.setPrsMailInstitucional(rs.getString("prs_mail_institucional"));
+                person.setPrsMailPersonal(rs.getString("prs_mail_personal"));
                 usuario.setUsrPersona(person);
                 usuario.setUsrNick(rs.getString("usr_nick"));
                 lista.add(usuario);
@@ -316,6 +319,39 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
             }
         }
         return aux;
+    }
+
+    public Usuario findTutorByPlan(Plan plan) throws Exception {
+        Usuario user = new Usuario();
+        Persona person = new Persona();
+        ResultSet rs;
+        try {
+            this.Conectar();
+            //PreparedStatement st = this.getCn().prepareCall("SELECT u.usr_id, pe.prs_nombres FROM usuario u, persona pe WHERE u.prs_id=pe.prs_id AND u.usr_id= ?");
+            PreparedStatement st = this.getCn().prepareCall("SELECT u.usr_id, p.prs_nombres, p.prs_primer_apellido\n"
+                    + "FROM plan pl, usuario u, plan_usuario pu,persona p, rol r, usuario_rol ur\n"
+                    + "WHERE pl.pln_id=pu.pln_id AND\n"
+                    + "pu.usr_id=u.usr_id AND\n"
+                    + "u.usr_id=ur.usr_id AND\n"
+                    + "u.prs_id=p.prs_id AND\n"
+                    + "ur.rol_id=r.rol_id AND\n"
+                    + "r.rol_descripcion= ? AND\n"
+                    + "pl.pln_id= ?");
+            st.setString(1, RolConstantes.ROL_BD_DOCENTE_LABEL);
+            st.setInt(2, plan.getPlnId());
+            rs = st.executeQuery();
+            while (rs.next()) {
+                user.setUsrId(rs.getInt("usr_id"));
+                person.setPrsNombres(rs.getString("prs_nombres"));
+                person.setPrsPrimerApellido(rs.getString("prs_primer_apellido"));
+                user.setUsrPersona(person);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            this.Cerrar();
+        }
+        return user;
     }
 
 }

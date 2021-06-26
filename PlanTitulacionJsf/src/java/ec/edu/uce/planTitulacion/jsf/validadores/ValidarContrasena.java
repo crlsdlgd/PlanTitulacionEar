@@ -28,7 +28,6 @@ public class ValidarContrasena implements Validator {
             }else{
                 caracterEspecial=true;//caracter especial
             }
-            System.out.println("Caracter: "+(int)strValor.charAt(i)+" contNumeros: "+contNumeros+" mayus: "+mayusculas+" minus: "+minusculas+" caracater Especial: "+caracterEspecial);
         }
         if(!caracterEspecial || strValor.length()<8 || !mayusculas || !minusculas || contNumeros<2){
             FacesMessage msg = new FacesMessage("La contraseña debe tener al menos 8 caracteres entre mayusculas, minusculas, caracteres especiales y al menos 2 números");

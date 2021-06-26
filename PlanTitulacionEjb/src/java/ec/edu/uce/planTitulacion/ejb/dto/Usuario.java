@@ -49,4 +49,5 @@ public class Usuario {
     public void setUsrNick(String usrNick) {
         this.usrNick = usrNick;
     }
+
 }

@@ -6,14 +6,19 @@ import ec.edu.uce.planTitulacion.ejb.dto.Plan;
 import ec.edu.uce.planTitulacion.ejb.dto.PlanUsuario;
 import ec.edu.uce.planTitulacion.ejb.dto.Usuario;
 import ec.edu.uce.planTitulacion.ejb.jdbc.impl.DAO;
+import ec.edu.uce.planTitulacion.ejb.servicios.SendMailGmail;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+//import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
 public class PlanUsuarioDaoImpl extends DAO implements PlanUsuarioDao {
+
+//    @EJB
+//    private PlanDaoImpl planDaoImpl;
 
     @Override
     public List<PlanUsuario> listarPostulantesByPlan(Plan plan) throws Exception {
@@ -112,8 +117,10 @@ public class PlanUsuarioDaoImpl extends DAO implements PlanUsuarioDao {
                 st.executeUpdate();
             }
             st.close();
-
             this.getCn().commit();
+//            SendMailGmail servicio = new SendMailGmail();
+//            PlanDaoImpl plan = new PlanDaoImpl();
+//            servicio.enviarPrimerMail(plan.findPlanById(listaPostulantes.get(0).getPlnId().getPlnId()));
         } catch (Exception e) {
             this.getCn().rollback();
             throw e;

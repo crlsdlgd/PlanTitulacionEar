@@ -20,7 +20,7 @@
             <ui:decorate template="/componentesGenerales/plantillas/template.xhtml"></ui:decorate>
             <f:event type="preRenderView" listener="#{controladorPlan.cargarMisPostulaciones()}"/>
             <h:form>
-                <p:panel header="Ver temas a los que he plus_postulado" >
+                <p:panel header="Ver temas a los que he postulado" >
                     <p:dataTable id="data" var="plan" value="#{controladorPlan.listaPlan}" >
                         <p:column headerText="Tema">
                             <h:outputText value="#{plan.plnTema}"/>

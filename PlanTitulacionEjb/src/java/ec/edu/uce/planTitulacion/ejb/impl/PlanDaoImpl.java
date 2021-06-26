@@ -224,7 +224,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
 
             this.getCn().commit();
             SendMailGmail servicio = new SendMailGmail();
-            servicio.enviarPrimerMail(this.findPlanById(idPlan));
+            servicio.enviarTemaARevisionMail(this.findPlanById(idPlan));
         } catch (Exception e) {
             this.getCn().rollback();
             throw e;
@@ -240,15 +240,21 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             lista = this.listarPlan();
             lista2 = lista;
             SendMailGmail servicio = new SendMailGmail();
-            System.out.println("qqqqqqqqqqqqqqqqqqqqqq: " + lista.size());
+            System.out.println("No.Planes: " + lista.size());
             String fechaPlan = "";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqq: " + lista.get(i).getPlnFecha());
-                fechaPlan = sdf.format(lista.get(i).getPlnFecha());
-                caso = tipoEmail(lista2.get(i).getPlnFecha());
-                lista.get(i).setPlnFecha(sdf.parse(fechaPlan));
-                System.out.println("qqqqqqqqqqqqqqqqqqqqqqqq2222222: " + lista.get(i).getPlnFecha());
+                System.out.println("Fecha del plan " + lista.get(i).getPlnId() + " : " + lista.get(i).getPlnFecha());
+
+                if (lista.get(i).getPlnFecha() == null) {
+                    caso = 0;
+                } else {
+                    fechaPlan = sdf.format(lista.get(i).getPlnFecha());
+                    System.out.println("------------------------- Leyo la fecha");
+                    caso = tipoEmail(lista2.get(i).getPlnFecha());
+                    lista.get(i).setPlnFecha(sdf.parse(fechaPlan));
+                }
+//                System.out.println("Confirma fecha: " + lista.get(i).getPlnFecha());
                 switch (caso) {
                     case 1:
                         System.out.println("paso x aqui!!!");
@@ -277,7 +283,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             java.util.Date fechaActual = new java.util.Date();
             fechaActual = sdf.parse(sdf.format(fechaActual));
             //fechaActual = sdf.parse(fechaActual.getYear()+"-"+fechaActual.getMonth()+"-"+fechaActual.getDate());
-            System.out.println("Fecha auxiliar" + fechaAux);
+            System.out.println("Fecha auxiliar: " + fechaAux);
             fechaAux.setDate(fechaAux.getDate() + 15);
             System.out.println("Fecha auxiliar +15 dias: " + fechaAux);
             System.out.println("Fecha Actual: " + fechaActual);
@@ -436,6 +442,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             st.setInt(1, plan.getPlnId());
             st.executeUpdate();
             st.close();
+            SendMailGmail servicio = new SendMailGmail();
+            servicio.enviarTemaARevisionMail(plan);
         } catch (Exception e) {
             throw e;
         } finally {
@@ -499,11 +507,14 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             PreparedStatement st = this.getCn().prepareStatement("UPDATE plan \n"
-                    + "SET pln_listo = FALSE, pln_aprobado= TRUE, pln_observaciones='N/A'\n"
+                    + "SET pln_fecha = ?, pln_listo = FALSE, pln_aprobado= TRUE, pln_observaciones='N/A'\n"
                     + "WHERE pln_id= ? ");
-            st.setInt(1, plan.getPlnId());
+            st.setDate(1, (Date) new java.util.Date());
+            st.setInt(2, plan.getPlnId());
             st.executeUpdate();
             st.close();
+            SendMailGmail servicio = new SendMailGmail();
+            servicio.enviarTemaAprobadoMail(plan);
         } catch (Exception e) {
             throw e;
         } finally {
@@ -549,6 +560,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             st.setInt(2, plan.getPlnId());
             st.executeUpdate();
             st.close();
+            
         } catch (Exception e) {
             throw e;
         } finally {
