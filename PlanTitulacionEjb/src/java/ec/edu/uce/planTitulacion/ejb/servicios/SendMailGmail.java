@@ -314,7 +314,7 @@ public class SendMailGmail {
         }
     }
 
-    private void enviarTemaAprobadoMailUsuario(Usuario get, Plan plan) throws Exception{
+    private void enviarTemaAprobadoMailUsuario(Usuario user, Plan plan) throws Exception{
         // SMTP info
         String host = properties.getProperty("mail.smtp.host");
         String port = properties.getProperty("mail.smtp.port");

@@ -5,6 +5,7 @@ import ec.edu.uce.planTitulacion.ejb.dto.Plan;
 import ec.edu.uce.planTitulacion.ejb.dto.Usuario;
 import ec.edu.uce.planTitulacion.ejb.jdbc.impl.DAO;
 import ec.edu.uce.planTitulacion.ejb.servicios.SendMailGmail;
+import ec.edu.uce.planTitulacion.ejb.utilities.fechaUtilToSql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -509,7 +510,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             PreparedStatement st = this.getCn().prepareStatement("UPDATE plan \n"
                     + "SET pln_fecha = ?, pln_listo = FALSE, pln_aprobado= TRUE, pln_observaciones='N/A'\n"
                     + "WHERE pln_id= ? ");
-            st.setDate(1, (Date) new java.util.Date());
+//            st.setDate(1, (Date) new java.util.Date());
+            st.setDate(1, fechaUtilToSql.fechaUtilToSql(new java.util.Date()));
             st.setInt(2, plan.getPlnId());
             st.executeUpdate();
             st.close();
@@ -560,7 +562,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             st.setInt(2, plan.getPlnId());
             st.executeUpdate();
             st.close();
-            
+
         } catch (Exception e) {
             throw e;
         } finally {

@@ -11,8 +11,8 @@ public class ServicioEmail {
     private PlanDaoImpl plan = new PlanDaoImpl();
 
 //    @Schedule(second = "*/30", minute = "*", hour = "*")
-//    @Schedule(second = "0", minute = "0", hour = "8")
-    @Schedule(second = "0", minute = "*", hour = "*")
+    @Schedule(second = "0", minute = "0", hour = "8")
+//    @Schedule(second = "0", minute = "*", hour = "*")
     private void BarrerPlan() throws Exception{
         System.out.println("-------------empieza el servicio------------");
 //        plan = new PlanDaoImpl();
