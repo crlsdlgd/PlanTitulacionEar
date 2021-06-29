@@ -133,6 +133,7 @@ public class UsuarioDaoImpl extends DAO implements UsuarioDao {
                     + "FROM plan p, usuario u, plan_usuario pu, persona pe\n"
                     + "WHERE pu.usr_id = u.usr_id AND\n"
                     + "u.prs_id=pe.prs_id AND\n"
+                    + "pu.plus_postulado='TRUE' AND\n"
                     + "p.pln_id= pu.pln_id AND p.pln_id=?");
 
             st.setInt(1, plan.getPlnId());

@@ -18,7 +18,8 @@
 
         <h:body class="dtic">
             <ui:include src="/componentesGenerales/plantillas/template.xhtml" />
-            <h:form>
+            <h:form id="idFormPrincipal" enctype="multipart/form-data" acceptcharset="UTF-8">
+                <p:growl id="growl" life="3000" showDetail="true"/>
                 <div class="wrapper" id="menu">
                     <ui:include src="/componentesGenerales/plantillas/pltMenu.xhtml" />
                 </div>

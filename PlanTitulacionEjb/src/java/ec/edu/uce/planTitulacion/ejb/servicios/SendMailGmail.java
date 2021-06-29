@@ -35,7 +35,8 @@ public class SendMailGmail {
 
     @EJB
     UsuarioDaoImpl dao;
-
+    
+    //metodo para configuracion del correo
     public SendMailGmail() {
         user = new Usuario();
         //user.setEmail("estudiantetitulacion@gmail.com");
@@ -47,7 +48,8 @@ public class SendMailGmail {
         properties.put("mail.user", correoEnvia);
         properties.put("mail.password", claveCorreo);
     }
-
+    
+    //metodo para enviar correo
     public void send(String host, String port, final String userName, final String password, String toAddress,
             String subject, String htmlBody, Map<String, String> mapInlineImages)
             throws AddressException, MessagingException {
@@ -99,45 +101,7 @@ public class SendMailGmail {
         }
 
         msg.setContent(multipart);
-
         Transport.send(msg);
-    }
-
-    public void enviarMail() {
-        // SMTP info
-        String host = properties.getProperty("mail.smtp.host");
-        String port = properties.getProperty("mail.smtp.port");
-
-        // message info
-        //String mailTo = user.getEmail();
-        String mailTo = "estudiantetitulacion@gmail.com";
-        String subject = "RECORDATORIO DE TEMA DE TESIS";
-        StringBuffer body = new StringBuffer("<html><br>");
-        body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
-        body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
-        //body.append(user.getNombre() + "<br>");
-        body.append("Le recordamos que usted consta en el sistema de titulación<br><br>");
-        body.append("A la Fecha: " + new Date() + "<br>");
-        body.append("Con el tutor: " + new Date() + "<br>");
-        body.append("Con el tema de: " + factorAutenticacion + " <br><br><br>");
-        body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
-        body.append("Atentamente,<br>");
-        body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
-        body.append("<img src=\"cid:image2\" style=\"width:100%;height:130px\" /><br>");
-        body.append("</html>");
-
-        // inline images
-        Map<String, String> inlineImages = new HashMap<String, String>();
-        inlineImages.put("image1", "D:/Eilfil/Imágenes/asd.png");//Imagen de cabecera
-        inlineImages.put("image2", "D:/Eilfil/Imágenes/asd.png");//Imagen de pie
-
-        try {
-            send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
-            System.out.println("Email sent.");
-        } catch (Exception ex) {
-            System.out.println("Could not send email.");
-            ex.printStackTrace();
-        }
     }
 
     public void enviarTemaARevisionMail(Plan plan) throws Exception {
@@ -149,38 +113,105 @@ public class SendMailGmail {
                 enviarTemaARevisionMailUsuario(lista.get(i), plan);
             }
         } catch (Exception e) {
-            System.out.println("enviar primer mail catch");
-            throw e;
+
         }
     }
 
-    public void enviarSegundoMail(Plan plan) throws Exception {
+    public void enviarQuinceDiasMail(Plan plan) throws Exception {
         UsuarioDaoImpl dao = new UsuarioDaoImpl();
         try {
             List<Usuario> lista = dao.listarUserByPlan(plan);
             for (int i = 0; i < lista.size(); i++) {
-                enviarSegundoMailUsuario(lista.get(i), plan);
+                enviarQuinceDiasMailUsuario(lista.get(i), plan);
             }
         } catch (Exception e) {
-            throw e;
+
         }
 
     }
 
-    public void enviarTercerMail(Plan plan) throws Exception {
+    public void enviarCincoMesesrMail(Plan plan) throws Exception {
 
         UsuarioDaoImpl dao = new UsuarioDaoImpl();
         try {
             List<Usuario> lista = dao.listarUserByPlan(plan);
             for (int i = 0; i < lista.size(); i++) {
-                enviarTercerMailUsuario(lista.get(i), plan);
+                enviarCincoMesesMailUsuario(lista.get(i), plan);
             }
         } catch (Exception e) {
-            throw e;
+        
         }
 
     }
     
+    
+    public void enviarTemaAprobadoMail(Plan plan) throws Exception {
+        try {
+//            List<Usuario> lista = dao.listarUserByPlan(plan);
+            UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
+            List<Usuario> lista = usuarioDaoImpl.listarUserByPlan(plan);
+            for (int i = 0; i < lista.size(); i++) {
+                enviarTemaAprobadoMailUsuario(lista.get(i), plan);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    
+    public void enviarTemaNoAprobadoMail(Plan plan) throws Exception{
+        try {
+//            List<Usuario> lista = dao.listarUserByPlan(plan);
+            UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
+            List<Usuario> lista = usuarioDaoImpl.listarUserByPlan(plan);
+            for (int i = 0; i < lista.size(); i++) {
+                enviarTemaNoAprobadoMailUsuario(lista.get(i), plan);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    //metodo base
+//    public void enviarMail() {
+//        // SMTP info
+//        String host = properties.getProperty("mail.smtp.host");
+//        String port = properties.getProperty("mail.smtp.port");
+//
+//        // message info
+//        //String mailTo = user.getEmail();
+//        String mailTo = "estudiantetitulacion@gmail.com";
+//        String subject = "RECORDATORIO DE TEMA DE TESIS";
+//        StringBuffer body = new StringBuffer("<html><br>");
+//        body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
+//        body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
+//        //body.append(user.getNombre() + "<br>");
+//        body.append("Le recordamos que usted consta en el sistema de titulación<br><br>");
+//        body.append("A la Fecha: " + new Date() + "<br>");
+//        body.append("Con el tutor: " + new Date() + "<br>");
+//        body.append("Con el tema de: " + factorAutenticacion + " <br><br><br>");
+//        body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
+//        body.append("Atentamente,<br>");
+//        body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
+//        body.append("<img src=\"cid:image2\" style=\"width:100%;height:130px\" /><br>");
+//        body.append("</html>");
+//
+//        // inline images
+//        Map<String, String> inlineImages = new HashMap<String, String>();
+//        inlineImages.put("image1", "D:/Eilfil/Imágenes/asd.png");//Imagen de cabecera
+//        inlineImages.put("image2", "D:/Eilfil/Imágenes/asd.png");//Imagen de pie
+//
+//        try {
+//            send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
+//            System.out.println("Email sent.");
+//        } catch (Exception ex) {
+//            System.out.println("Could not send email.");
+//            ex.printStackTrace();
+//        }
+//    }
+    
+    
+    // este metodo envia un correo informando a al usuario de un plan que el plan se ha enviado a consejo de carrera
     public void enviarTemaARevisionMailUsuario(Usuario user, Plan plan) throws Exception {
         // SMTP info
         String host = properties.getProperty("mail.smtp.host");
@@ -193,15 +224,14 @@ public class SendMailGmail {
         // message info
         //String mailTo = user.getEmail();
         String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
-        String subject = "REGISTRO DE TEMA DE TESIS";
+        String subject = "TEMA DE TESIS EN REVISIÓN";
         StringBuffer body = new StringBuffer("<html><br>");
         body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
         body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Un cordial Saludo.<br><br>");
         //body.append(user.getNombre() + "<br>");
-        body.append("El día de hoy se ha registrado en el sistema de titulación el tema: " + plan.getPlnTema() + " <br><br>");
+        body.append("El día de hoy en el sistema de titulación el tema: " + plan.getPlnTema() + " <br><br>");
         body.append("Con el tutor: " +tutor.getUsrPersona().getPrsNombres()+" "+tutor.getUsrPersona().getPrsPrimerApellido()+"<br>");//tutor aqui
-        System.out.println("aaaaaaaaaa: "+tutor.getUsrPersona().getPrsNombres()+" "+tutor.getUsrPersona().getPrsPrimerApellido());
-        body.append("Este plan de tesis fue enviado a Consejo de Carrera para ser revisado.<br>");
+        body.append("Ha sido enviado a Consejo de Carrera para ser revisado.<br>");
         body.append("Se le informará si este proyecto ha sido aprobado como tema de tesis o rechazado junto con observaciones del mismo.<br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");
@@ -215,7 +245,6 @@ public class SendMailGmail {
         inlineImages.put("image2", "D:/Eilfil/Imágenes/asd.png");//Imagen de pie
 
         try {
-            System.out.println("bbbbbb"+host+ port+ correoEnvia+ claveCorreo+ mailTo+ subject+ body.toString()+ inlineImages);
             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
             System.out.println("Email sent.");
         } catch (Exception ex) {
@@ -224,13 +253,16 @@ public class SendMailGmail {
         }
     }
 
-    public void enviarSegundoMailUsuario(Usuario user, Plan plan) {
+    // este metodo envia un correo informando a al usuario de un plan que han pasado 15 dias desde la aprobacion del tema
+    public void enviarQuinceDiasMailUsuario(Usuario user, Plan plan) throws Exception{
         // SMTP info
         
-        System.out.println("bbbbbbbbbbbbbbbbbbbbbbbbbbbbb");
         String host = properties.getProperty("mail.smtp.host");
         String port = properties.getProperty("mail.smtp.port");
 
+        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
+        Usuario tutor = usuarioDaoImpl.findTutorByPlan(plan);
+        
         // message info
         String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
         String subject = "RECORDATORIO DE TEMA DE TESIS";
@@ -238,10 +270,10 @@ public class SendMailGmail {
         body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
         body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
         //body.append(user.getNombre() + "<br>");
-        body.append("Le recordamos que usted consta en el sistema de titulación<br><br>");
+        body.append("Le recordamos que el tema de tesis: " + plan.getPlnTema() + "<br><br>");
         body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
-        body.append("Con el tutor: " + new Date() + "<br>");
-        body.append("Con el tema de: " + plan.getPlnTema() + " <br><br><br>");
+        body.append("Con el tutor: " +tutor.getUsrPersona().getPrsNombres()+" "+tutor.getUsrPersona().getPrsPrimerApellido()+"<br>");
+        body.append("Tiene seis meses para comcluir el proyecto desde la fecha de aprobacion en el sistema de titulación.<br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");
         body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
@@ -262,11 +294,15 @@ public class SendMailGmail {
         }
     }
 
-    public void enviarTercerMailUsuario(Usuario user, Plan plan) {
+    // este metodo envia un correo informando a al usuario de un plan que han pasado 5 meses desde la aprobacion del tema
+    public void enviarCincoMesesMailUsuario(Usuario user, Plan plan) throws Exception{
         // SMTP info
         String host = properties.getProperty("mail.smtp.host");
         String port = properties.getProperty("mail.smtp.port");
 
+        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
+        Usuario tutor = usuarioDaoImpl.findTutorByPlan(plan);
+        
         // message info
         //String mailTo = user.getEmail();
         String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
@@ -275,10 +311,9 @@ public class SendMailGmail {
         body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
         body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Estimado Estudiate.<br><br>");
         //body.append(user.getNombre() + "<br>");
-        body.append("Le recordamos que usted consta en el sistema de titulación<br><br>");
+        body.append("Le recordamos que el tema de tesis: " + plan.getPlnTema() + "<br><br>");
         body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
-        body.append("Con el tutor: " + new Date() + "<br>");
-        body.append("Con el tema de: " + plan.getPlnTema() + " <br>");
+        body.append("Con el tutor: " +tutor.getUsrPersona().getPrsNombres()+" "+tutor.getUsrPersona().getPrsPrimerApellido()+"<br>");
         body.append("Recuerde ya han culminado cinco meses desde el registro de su tema, le queda un mes para el control antiplagio. <br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");
@@ -300,20 +335,7 @@ public class SendMailGmail {
         }
     }
 
-
-    public void enviarTemaAprobadoMail(Plan plan) throws Exception {
-        try {
-//            List<Usuario> lista = dao.listarUserByPlan(plan);
-            UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
-            List<Usuario> lista = usuarioDaoImpl.listarUserByPlan(plan);
-            for (int i = 0; i < lista.size(); i++) {
-                enviarTemaAprobadoMailUsuario(lista.get(i), plan);
-            }
-        } catch (Exception e) {
-            throw e;
-        }
-    }
-
+    // este metodo envia un correo informando a al usuario de un plan que el plan se ha aprobado por consejo de carrera
     private void enviarTemaAprobadoMailUsuario(Usuario user, Plan plan) throws Exception{
         // SMTP info
         String host = properties.getProperty("mail.smtp.host");
@@ -354,8 +376,48 @@ public class SendMailGmail {
             ex.printStackTrace();
         }
     }
-
     
+    // este metodo envia un correo informando a al usuario de un plan que el plan se sido rechazado por consejo de carrera
+    private void enviarTemaNoAprobadoMailUsuario(Usuario user, Plan plan) throws Exception{
+        // SMTP info
+        String host = properties.getProperty("mail.smtp.host");
+        String port = properties.getProperty("mail.smtp.port");
+        
+//        Usuario tutor =dao.findTutorByPlan(plan);
+        UsuarioDaoImpl usuarioDaoImpl = new UsuarioDaoImpl();
+        Usuario tutor = usuarioDaoImpl.findTutorByPlan(plan);
+
+        // message info
+        //String mailTo = user.getEmail();
+        String mailTo = user.getUsrPersona().getPrsMailPersonal();//para pruebas, se encuentra con gmail
+        String subject = "APROBACIÓN DE TEMA DE TESIS";
+        StringBuffer body = new StringBuffer("<html><br>");
+        body.append("<img src=\"cid:image1\" style=\"width:100%;height:100px\"/>");
+        body.append("<form style=\"padding: 0px 14px 0px 14px;border-bottom:none !important;border-top:none !important;border: solid 1px red;\"> Un cordial Saludo.<br><br>");
+        //body.append(user.getNombre() + "<br>");
+        body.append("El día de hoy se ha dado respuesta en el sistema de titulación al tema: " + plan.getPlnTema() + " <br><br>");
+        body.append("Con el tutor: " +tutor.getUsrPersona().getPrsNombres()+" "+tutor.getUsrPersona().getPrsPrimerApellido()+"<br>");//tutor aqui
+        body.append("Este plan de tesis ha sido revisado por Consejo de Carrera y fue RECHAZADO.<br>");
+        body.append("Por el motivo de :"+plan.getPlnObservaciones()+".<br>");
+        body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
+        body.append("Atentamente,<br>");
+        body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
+        body.append("<img src=\"cid:image2\" style=\"width:100%;height:130px\" /><br>");
+        body.append("</html>");
+
+        // inline images
+        Map<String, String> inlineImages = new HashMap<String, String>();
+        inlineImages.put("image1", "D:/Eilfil/Imágenes/asd.png");//Imagen de cabecera
+        inlineImages.put("image2", "D:/Eilfil/Imágenes/asd.png");//Imagen de pie
+
+        try {
+             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
+            System.out.println("Email sent.");
+        } catch (Exception ex) {
+            System.out.println("Could not send email.");
+            ex.printStackTrace();
+        }
+    }
     
     /**
      * SETTERS Y GETTERS *

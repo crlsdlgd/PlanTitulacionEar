@@ -259,11 +259,11 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                 switch (caso) {
                     case 1:
                         System.out.println("paso x aqui!!!");
-                        servicio.enviarSegundoMail(lista.get(i));
+                        servicio.enviarQuinceDiasMail(lista.get(i));
                         break;
                     case 2:
                         System.out.println("paso x aqui222!!!");
-                        servicio.enviarTercerMail(lista.get(i));
+                        servicio.enviarCincoMesesrMail(lista.get(i));
                         break;
                     default:
                         System.out.println("paso x aqui default!!!");
@@ -562,7 +562,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             st.setInt(2, plan.getPlnId());
             st.executeUpdate();
             st.close();
-
+            SendMailGmail servicio = new SendMailGmail();
+            servicio.enviarTemaNoAprobadoMail(plan);
         } catch (Exception e) {
             throw e;
         } finally {
