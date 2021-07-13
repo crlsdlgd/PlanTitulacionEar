@@ -7,11 +7,14 @@ public class Plan {
     private Integer plnPropuestoPor;
     private String plnTema;
     private String plnDetalle;
+    private String plnObjetivos;
+    private String plnJustificación;
     private String plnObservaciones;
     private Date plnFecha;
     private boolean plnAprobado;
     private String plnEstado;
 
+    
     public String getPlnEstado() {
         return plnEstado;
     }
@@ -37,6 +40,24 @@ public class Plan {
         this.plnPropuestoPor = plnPropuestoPor;
     }
 
+    public String getPlnObjetivos() {
+        return plnObjetivos;
+    }
+
+    public void setPlnObjetivos(String plnObjetivos) {
+        this.plnObjetivos = plnObjetivos;
+    }
+
+    public String getPlnJustificación() {
+        return plnJustificación;
+    }
+
+    public void setPlnJustificación(String plnJustificación) {
+        this.plnJustificación = plnJustificación;
+    }
+
+    
+    
     public String getPlnDetalle() {
         return plnDetalle;
     }

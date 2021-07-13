@@ -9,7 +9,7 @@ import ec.edu.uce.planTitulacion.ejb.dto.Persona;
 import ec.edu.uce.planTitulacion.ejb.dto.Plan;
 import ec.edu.uce.planTitulacion.ejb.dto.Usuario;
 import ec.edu.uce.planTitulacion.ejb.jdbc.impl.DAO;
-import static ec.edu.uce.planTitulacion.ejb.utilities.fechaUtilToSql.fechaUtilToSql;
+import static ec.edu.uce.planTitulacion.ejb.utilities.FechaUtilToSql.fechaUtilToSql;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

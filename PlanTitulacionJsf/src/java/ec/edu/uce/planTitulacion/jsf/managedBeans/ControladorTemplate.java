@@ -4,7 +4,6 @@ import ec.edu.uce.planTitulacion.ejb.dto.Usuario;
 import java.io.Serializable;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-//import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 @Named(value = "controladorTemplate")
