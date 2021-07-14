@@ -16,7 +16,7 @@ public interface PlanDao {
 
     public void guardarPlan(String tema, Date fecha, List<String> listIntegrantes, Usuario user) throws Exception;
 
-    public void guardarPropuestaPlan(String txtTema, String txtDetalle, Usuario user) throws Exception;
+    public void guardarPropuestaPlan(String txtTema, String txtDetalle, String txtObjetivos, String txtJustificacion, Usuario user) throws Exception;
 
     public List<Plan> listarPlanesNoAprobadosNiplus_postulados(Usuario user) throws Exception;
 

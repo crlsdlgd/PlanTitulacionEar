@@ -31,35 +31,9 @@ public class ControladorPlan implements Serializable {
     private List<Usuario> listUsuario;
     private List<String> listIntegrantes;
     private Plan plan;
-    private String txtEstudiante, txtTema,txtDetalle;
+    private String txtEstudiante, txtTema,txtDetalle, txtObjetivos, txtJustificacion;
     private Date txtFecha;
     
-    
-    public String getTxtDetalle() {
-        return txtDetalle;
-    }
-
-    public void setTxtDetalle(String txtDetalle) {
-        this.txtDetalle = txtDetalle;
-    }
-    
-    public void cargarPlanesAprobados() throws Exception {
-        listaPlan = planDao.listarPlanesAprobados();
-    }
-    
-    public void cargarPlanesNoAprobadosNiplus_postulados() throws Exception {
-        listaPlan = planDao.listarPlanesNoAprobadosNiplus_postulados(ControladorUsuario.user);
-    }
-
-    public void listarUsuarioByPlan(Plan plan) throws Exception {
-        listUsuario = usuarioDao.listarUserByPlan(plan);
-    }
-
-    public List<String> autoCompletarEstudiante(String query) throws Exception {
-        List<String> lista = usuarioDao.autoCompletarEstudiante(query);
-        return lista;
-    }
-
     public void anadirEstudiante() throws Exception{
         boolean flag = false;
         if (usuarioDao.existeEstudiante(txtEstudiante)) {
@@ -89,7 +63,7 @@ public class ControladorPlan implements Serializable {
     }
 
     public void guardarPropuestaPlan() throws Exception{
-        planDao.guardarPropuestaPlan(txtTema, txtDetalle, ControladorUsuario.user);
+        planDao.guardarPropuestaPlan(txtTema, txtDetalle, txtObjetivos, txtJustificacion, ControladorUsuario.user);
         addMessage("Plan Guardado con exito");
     }
 
@@ -160,6 +134,47 @@ public class ControladorPlan implements Serializable {
     public ControladorPlan() {
     }
 
+    public String getTxtDetalle() {
+        return txtDetalle;
+    }
+
+    public void setTxtDetalle(String txtDetalle) {
+        this.txtDetalle = txtDetalle;
+    }
+    
+    public void cargarPlanesAprobados() throws Exception {
+        listaPlan = planDao.listarPlanesAprobados();
+    }
+    
+    public void cargarPlanesNoAprobadosNiplus_postulados() throws Exception {
+        listaPlan = planDao.listarPlanesNoAprobadosNiplus_postulados(ControladorUsuario.user);
+    }
+
+    public void listarUsuarioByPlan(Plan plan) throws Exception {
+        listUsuario = usuarioDao.listarUserByPlan(plan);
+    }
+
+    public List<String> autoCompletarEstudiante(String query) throws Exception {
+        List<String> lista = usuarioDao.autoCompletarEstudiante(query);
+        return lista;
+    }
+
+    public String getTxtObjetivos() {
+        return txtObjetivos;
+    }
+
+    public void setTxtObjetivos(String txtObjetivos) {
+        this.txtObjetivos = txtObjetivos;
+    }
+
+    public String getTxtJustificacion() {
+        return txtJustificacion;
+    }
+
+    public void setTxtJustificacion(String txtJustificacion) {
+        this.txtJustificacion = txtJustificacion;
+    }
+    
     public Date getTxtFecha() {
         return txtFecha;
     }

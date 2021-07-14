@@ -313,14 +313,17 @@ public class PlanDaoImpl extends DAO implements PlanDao {
     }
 
     @Override
-    public void guardarPropuestaPlan(String txtTema, String txtDetalle, Usuario user) throws Exception {
+    public void guardarPropuestaPlan(String txtTema, String txtDetalle, String txtObjetivos, String txtJustificacion, Usuario user) throws Exception {
         try {
             this.Conectar();
             this.getCn().setAutoCommit(false);
-            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema, pln_detalle, pln_propuesto_por, pln_aprobado) VALUES(?,?,?,FALSE)");
+            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema, pln_detalle, pln_propuesto_por, pln_observaciones, pln_justificacion, pln_aprobado) VALUES(?,?,?,?,?,FALSE)");
             st.setString(1, txtTema);
             st.setString(2, txtDetalle);
             st.setInt(3, user.getUsrId());
+            st.setString(4, txtObjetivos);
+            st.setString(5, txtJustificacion);
+            
             st.executeUpdate();
             st.close();
 
