@@ -87,7 +87,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, pln_objetivos, pln_justificacion, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
                     + "WHERE p.pln_id=pu.pln_id AND\n"
                     + "p.pln_aprobado='FALSE' AND\n"
@@ -108,6 +108,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                 plan.setPlnId(rs.getInt("pln_id"));
                 plan.setPlnTema(rs.getString("pln_tema"));
                 plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnObjetivos(rs.getString("pln_objetivos"));
+                plan.setPlnJustificación(rs.getString("pln_justificacion"));
                 plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
@@ -317,7 +319,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         try {
             this.Conectar();
             this.getCn().setAutoCommit(false);
-            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema, pln_detalle, pln_propuesto_por, pln_observaciones, pln_justificacion, pln_aprobado) VALUES(?,?,?,?,?,FALSE)");
+            PreparedStatement st = this.getCn().prepareStatement("INSERT INTO plan (pln_tema, pln_detalle, pln_propuesto_por, pln_objetivos, pln_justificacion, pln_aprobado) VALUES(?,?,?,?,?,FALSE)");
             st.setString(1, txtTema);
             st.setString(2, txtDetalle);
             st.setInt(3, user.getUsrId());
@@ -378,7 +380,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_objetivos, p.pln_justificacion, p.pln_propuesto_por"
                     + " FROM plan p, plan_usuario pu\n"
                     + "WHERE p.pln_id=pu.pln_id AND\n"
                     + "p.pln_aprobado='FALSE' AND\n"
@@ -392,6 +394,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                 plan.setPlnId(rs.getInt("pln_id"));
                 plan.setPlnTema(rs.getString("pln_tema"));
                 plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnObjetivos(rs.getString("pln_objetivos"));
+                plan.setPlnJustificación(rs.getString("pln_justificacion"));
                 plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
@@ -410,7 +414,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, pln_objetivos, pln_justificacion, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
                     + "WHERE p.pln_id=pu.pln_id AND\n"
                     + "p.pln_aprobado='TRUE' AND\n"
@@ -424,6 +428,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                 plan.setPlnId(rs.getInt("pln_id"));
                 plan.setPlnTema(rs.getString("pln_tema"));
                 plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnObjetivos(rs.getString("pln_objetivos"));
+                plan.setPlnJustificación(rs.getString("pln_justificacion"));
                 plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
@@ -480,7 +486,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT p.pln_id, p.pln_tema, p.pln_detalle, pln_objetivos, pln_justificacion, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
                     + "WHERE p.pln_id=pu.pln_id AND\n"
                     + "p.pln_aprobado='FALSE' AND\n"
@@ -495,6 +501,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                 plan.setPlnId(rs.getInt("pln_id"));
                 plan.setPlnTema(rs.getString("pln_tema"));
                 plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnObjetivos(rs.getString("pln_objetivos"));
+                plan.setPlnJustificación(rs.getString("pln_justificacion"));
                 plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }
@@ -533,7 +541,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
         ResultSet rs;
         try {
             this.Conectar();
-            PreparedStatement st = this.getCn().prepareCall("SELECT pln_id, pln_tema, pln_detalle, pln_propuesto_por \n"
+            PreparedStatement st = this.getCn().prepareCall("SELECT pln_id, pln_tema, pln_detalle, pln_objetivos, pln_justificacion, pln_propuesto_por \n"
                     + "FROM plan p\n"
                     + "WHERE pln_listo='TRUE'");
             rs = st.executeQuery();
@@ -543,6 +551,8 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                 plan.setPlnId(rs.getInt("pln_id"));
                 plan.setPlnTema(rs.getString("pln_tema"));
                 plan.setPlnDetalle(rs.getString("pln_detalle"));
+                plan.setPlnObjetivos(rs.getString("pln_objetivos"));
+                plan.setPlnJustificación(rs.getString("pln_justificacion"));
                 plan.setPlnPropuestoPor(rs.getInt("pln_propuesto_por"));
                 lista.add(plan);
             }

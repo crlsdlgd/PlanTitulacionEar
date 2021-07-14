@@ -55,8 +55,6 @@ public class Plan {
     public void setPlnJustificación(String plnJustificación) {
         this.plnJustificación = plnJustificación;
     }
-
-    
     
     public String getPlnDetalle() {
         return plnDetalle;

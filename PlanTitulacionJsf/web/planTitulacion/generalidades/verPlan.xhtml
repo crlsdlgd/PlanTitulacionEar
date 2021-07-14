@@ -29,6 +29,12 @@
                     <p:column headerText="Detalle">
                         <h:outputText value="#{plan.plnDetalle}" />
                     </p:column>
+                    <p:column headerText="Objetivos">
+                        <h:outputText value="#{plan.plnObjetivos}"/>
+                    </p:column>
+                    <p:column headerText="Justificación">
+                        <h:outputText value="#{plan.plnJustificación}" />
+                    </p:column>
                     <p:column headerText="Propuesto por">
                         <p:commandLink value="Ver Precursor" actionListener="#{controladorUsuario.verUsuarioPrecursor(plan)}" update=":dlgWare2"/>
                     </p:column>  
