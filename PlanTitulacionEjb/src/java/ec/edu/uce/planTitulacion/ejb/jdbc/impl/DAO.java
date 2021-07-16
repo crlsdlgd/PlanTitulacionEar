@@ -25,7 +25,7 @@ public class DAO {
 
         try {
             Class.forName("org.postgresql.Driver");
-            cn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/titulacion?user=postgres&password=Pass_1992");
+            cn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/titulacion2?user=postgres&password=Pass_1992");
             //cn = DriverManager.getConnection("jdbc:postgresql://"+HOST+":"+PORT+"/"+DATABASE+"?ssl=true&sslmode=require",USER,PASSWORD);
         } catch (Exception e) {
             throw e;

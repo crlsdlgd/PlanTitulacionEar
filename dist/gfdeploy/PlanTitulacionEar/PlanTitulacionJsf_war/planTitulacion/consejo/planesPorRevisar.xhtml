@@ -58,7 +58,7 @@
                 </h:form>
             </p:dialog>
 
-            <p:dialog header="Integrantes" widgetVar="wdlWare3" id="dlgWare3">
+            <p:dialog header="Integrantes" widgetVar="wdlWare3" id="dlgWare3" width="50%">
                 <h:form>
                     <p:dataTable id="dataPostulantes" var="integrante" value="#{controladorUsuario.listaIntegrantes}">
                         <p:column  headerText="Integrantes">
@@ -76,7 +76,7 @@
                 <h:form>
                     <p:outputLabel value="¿Está seguro de aprobar este tema?" />
                     <br/>
-                    <div class="container">
+                    <div class="container centrar">
                         <p:commandButton value="SI" actionListener="#{controladorPlan.aprobarTema()}" oncomplete="PF('wdlWare4').hide();" update=":formu:growl" ajax="false"/>
                         <p:commandButton value="NO" oncomplete="PF('wdlWare5').show();" />
                     </div>
@@ -87,7 +87,9 @@
                 <h:form>
                     <p:inputTextarea value="#{controladorPlan.plan.plnObservaciones}" placeholder="Por favor ingrese las observaciones del por que este tema no fue aprobado" rows="6" cols="30"/>
                     <br/>
-                    <p:commandButton value="Rechazar Tema" actionListener="#{controladorPlan.noAprobarTema()}" oncomplete="PF('wdlWare4').hide; PF('wdlWare5').hide;" update=":formu:growl" ajax="false"/>
+                    <div class="centrar">
+                        <p:commandButton value="Rechazar Tema" actionListener="#{controladorPlan.noAprobarTema()}" oncomplete="PF('wdlWare4').hide; PF('wdlWare5').hide;" update=":formu:growl" ajax="false"/>
+                    </div>
                 </h:form>
             </p:dialog>
         </h:body>
