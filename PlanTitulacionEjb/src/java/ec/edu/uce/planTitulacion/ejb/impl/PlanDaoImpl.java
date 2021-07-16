@@ -94,7 +94,7 @@ public class PlanDaoImpl extends DAO implements PlanDao {
                     + "pu.plus_postulado='FALSE' AND\n"
                     + "pu.usr_id!= ? AND\n"
                     + "p.pln_propuesto_por!= ?\n"
-                    + "EXCEPT (SELECT p.pln_id, p.pln_tema, p.pln_detalle, p.pln_propuesto_por \n"
+                    + "EXCEPT (SELECT p.pln_id, p.pln_tema, p.pln_detalle, pln_objetivos, pln_justificacion, p.pln_propuesto_por \n"
                     + "FROM plan p, plan_usuario pu\n"
                     + "WHERE pu.pln_id=p.pln_id AND\n"
                     + "pu.usr_id =?)");
