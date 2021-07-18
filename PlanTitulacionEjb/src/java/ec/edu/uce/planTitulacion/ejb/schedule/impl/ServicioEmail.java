@@ -1,6 +1,7 @@
 package ec.edu.uce.planTitulacion.ejb.schedule.impl;
 
 import ec.edu.uce.planTitulacion.ejb.impl.PlanDaoImpl;
+import ec.edu.uce.planTitulacion.ejb.servicios.SendMailGmail;
 import javax.ejb.Schedule;
 import javax.ejb.Singleton;
 
@@ -17,6 +18,8 @@ public class ServicioEmail {
         System.out.println("-------------empieza el servicio------------");
 //        plan = new PlanDaoImpl();
         plan.BarrerPlan();
+//        SendMailGmail servicio = new SendMailGmail();
+//        servicio.metodoPrueba();
     }
     
 //    @Schedule(second = "*", minute = "*", hour = "*")
