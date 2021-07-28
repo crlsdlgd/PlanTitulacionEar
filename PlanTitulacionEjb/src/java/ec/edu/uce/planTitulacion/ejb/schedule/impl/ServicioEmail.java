@@ -16,14 +16,10 @@ public class ServicioEmail {
 //    @Schedule(second = "0", minute = "*", hour = "*")
     private void BarrerPlan() throws Exception{
         System.out.println("-------------empieza el servicio------------");
-//        plan = new PlanDaoImpl();
+
         plan.BarrerPlan();
 //        SendMailGmail servicio = new SendMailGmail();
 //        servicio.metodoPrueba();
     }
-    
-//    @Schedule(second = "*", minute = "*", hour = "*")
-//    private void saludo(){
-//        System.out.println("-----------Prueba de Schedule----------");
-//    }
+
 }

@@ -269,7 +269,7 @@ public class SendMailGmail {
         body.append("Le recordamos que el tema de tesis: " + plan.getPlnTema() + "<br><br>");
         body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
         body.append("Con el tutor: " + tutor.getUsrPersona().getPrsNombres() + " " + tutor.getUsrPersona().getPrsPrimerApellido() + "<br>");
-        body.append("Tiene seis meses para comcluir el proyecto desde la fecha de aprobacion en el sistema de titulación.<br>");
+        body.append("Tiene seis meses para concluir el proyecto desde la fecha de aprobacion en el sistema de titulación.<br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");
         body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
@@ -310,7 +310,7 @@ public class SendMailGmail {
         body.append("Le recordamos que el tema de tesis: " + plan.getPlnTema() + "<br><br>");
         body.append("A la Fecha: " + plan.getPlnFecha() + "<br>");
         body.append("Con el tutor: " + tutor.getUsrPersona().getPrsNombres() + " " + tutor.getUsrPersona().getPrsPrimerApellido() + "<br>");
-        body.append("Recuerde ya han culminado cinco meses desde el registro de su tema, le queda un mes para el control antiplagio. <br>");
+        body.append("Recuerde ya han transcurrido cinco meses desde el registro de su tema, le queda un mes para el control antiplagio. <br>");
         body.append("Gracias por utilizar nuestros servicios.<br><br><br>");
         body.append("Atentamente,<br>");
         body.append("Facultad de Ingeniería Ciencias Físicas y Matemática, Dirección de Carrera de Ingeniería Informática.</form>");
@@ -415,7 +415,7 @@ public class SendMailGmail {
         }
     }
 
-    //metodo de prueba 
+//    metodo de prueba 
 //    public void metodoPrueba() throws Exception {
 //        // SMTP info
 //        String host = properties.getProperty("mail.smtp.host");
@@ -438,11 +438,15 @@ public class SendMailGmail {
 //
 //        // inline images
 //        Map<String, String> inlineImages = new HashMap<String, String>();
-//        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera
-//        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie
+////        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera
+////        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie
 //
+//        inlineImages.put("image1", "https://ibb.co/f06yLB8");//Imagen de cabecera
+//        inlineImages.put("image2", "https://ibb.co/gSf3WLw");//Imagen de pie
 //        try {
-//            send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
+//            System.out.println("host: "+host+" port: "+port+" correo Envia: "+correoEnvia+ " claveCorreo: "
+//                    +claveCorreo+" mailTo: "+mailTo+" subject: "+subject);
+//            send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages); 
 //            System.out.println("Email sent.");
 //        } catch (Exception ex) {
 //            System.out.println("Could not send email.");

@@ -144,11 +144,9 @@ public class ControladorRegistro implements Serializable {
         if (flag) {
             addMessage("Registro Exitoso!");
             aux = "inicio";
-            System.out.println("3.......yea" + usrPassword);
         } else{
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al momento de ingresar usuario", null);
             FacesContext.getCurrentInstance().addMessage(null, message);
-            System.out.println("4.......mal" + usrPassword);
         } 
         if(!isIdentificacionExists){
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "No. Identificación duplicada", null);
@@ -159,7 +157,7 @@ public class ControladorRegistro implements Serializable {
     }
 
     private void cargarUsuarioRegistro() {
-        System.out.println("-----PrsIdentificacion: " + prsIdentificacion);
+
         personaregistro = new Persona();
         etniaRegistro = new Etnia();
         usuarioRegistro = new Usuario();
