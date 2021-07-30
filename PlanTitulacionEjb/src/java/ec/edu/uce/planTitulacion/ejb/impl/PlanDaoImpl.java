@@ -243,32 +243,32 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             lista = this.listarPlan();
             lista2 = lista;
             SendMailGmail servicio = new SendMailGmail();
-            System.out.println("No.Planes: " + lista.size());
+//            System.out.println("No.Planes: " + lista.size());
             String fechaPlan = "";
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             for (int i = 0; i < lista.size(); i++) {
-                System.out.println("Fecha del plan " + lista.get(i).getPlnId() + " : " + lista.get(i).getPlnFecha());
+//                System.out.println("Fecha del plan " + lista.get(i).getPlnId() + " : " + lista.get(i).getPlnFecha());
 
                 if (lista.get(i).getPlnFecha() == null) {
                     caso = 0;
                 } else {
                     fechaPlan = sdf.format(lista.get(i).getPlnFecha());
-                    System.out.println("------------------------- Leyo la fecha");
+//                    System.out.println("------------------------- Leyo la fecha");
                     caso = tipoEmail(lista2.get(i).getPlnFecha());
                     lista.get(i).setPlnFecha(sdf.parse(fechaPlan));
                 }
 //                System.out.println("Confirma fecha: " + lista.get(i).getPlnFecha());
                 switch (caso) {
                     case 1:
-                        System.out.println("paso x aqui!!!");
+//                        System.out.println("paso x aqui!!!");
                         servicio.enviarQuinceDiasMail(lista.get(i));
                         break;
                     case 2:
-                        System.out.println("paso x aqui222!!!");
+//                        System.out.println("paso x aqui222!!!");
                         servicio.enviarCincoMesesrMail(lista.get(i));
                         break;
                     default:
-                        System.out.println("paso x aqui default!!!");
+//                        System.out.println("paso x aqui default!!!");
                 }
             }
         } catch (Exception e) {
@@ -286,20 +286,20 @@ public class PlanDaoImpl extends DAO implements PlanDao {
             java.util.Date fechaActual = new java.util.Date();
             fechaActual = sdf.parse(sdf.format(fechaActual));
             //fechaActual = sdf.parse(fechaActual.getYear()+"-"+fechaActual.getMonth()+"-"+fechaActual.getDate());
-            System.out.println("Fecha auxiliar: " + fechaAux);
+//            System.out.println("Fecha auxiliar: " + fechaAux);
             fechaAux.setDate(fechaAux.getDate() + 15);
-            System.out.println("Fecha auxiliar +15 dias: " + fechaAux);
-            System.out.println("Fecha Actual: " + fechaActual);
+//            System.out.println("Fecha auxiliar +15 dias: " + fechaAux);
+//            System.out.println("Fecha Actual: " + fechaActual);
             if (fechaAux.compareTo(fechaActual) == 0) {
                 fechaAux.setDate(fechaAux.getDate() - 15);
-                System.out.println(fechaAux.compareTo(fechaActual));
+//                System.out.println(fechaAux.compareTo(fechaActual));
                 caso = 1;
             } else {
                 fechaAux.setDate(fechaAux.getDate() - 15);
                 fechaAux.setMonth(fechaAux.getMonth() + 5);
-                System.out.println("Fecha auxiliar +5 meses: " + fechaAux);
+//                System.out.println("Fecha auxiliar +5 meses: " + fechaAux);
                 if (fechaAux.compareTo(fechaActual) == 0) {
-                    System.out.println(fechaAux.compareTo(fechaActual));
+//                    System.out.println(fechaAux.compareTo(fechaActual));
                     caso = 2;
                 }
                 //fechaAux.setMonth(fechaAux.getMonth() - 5);

@@ -15,7 +15,7 @@ public class ServicioEmail {
     @Schedule(second = "0", minute = "0", hour = "8")
 //    @Schedule(second = "0", minute = "*", hour = "*")
     private void BarrerPlan() throws Exception{
-        System.out.println("-------------empieza el servicio------------");
+//        System.out.println("-------------empieza el servicio------------");
 
         plan.BarrerPlan();
 //        SendMailGmail servicio = new SendMailGmail();

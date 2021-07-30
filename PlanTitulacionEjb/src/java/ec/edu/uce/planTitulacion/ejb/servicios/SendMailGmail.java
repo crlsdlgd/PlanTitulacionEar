@@ -237,9 +237,11 @@ public class SendMailGmail {
 
         // inline images
         Map<String, String> inlineImages = new HashMap<String, String>();
-        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera
-        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie
-
+//        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera localhost
+//        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie localhost
+        
+        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera DigitalOcean
+        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie cabecera DigitalOcean
         try {
             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
             System.out.println("Email sent.");
@@ -278,8 +280,11 @@ public class SendMailGmail {
 
         // inline images
         Map<String, String> inlineImages = new HashMap<String, String>();
-        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera
-        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie
+//        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera localhost
+//        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie localhost
+        
+        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera DigitalOcean
+        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie cabecera DigitalOcean
 
         try {
             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
@@ -319,8 +324,11 @@ public class SendMailGmail {
 
         // inline images
         Map<String, String> inlineImages = new HashMap<String, String>();
-        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera
-        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie
+//        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera localhost
+//        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie localhost
+        
+        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera DigitalOcean
+        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie cabecera DigitalOcean
 
         try {
             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
@@ -361,8 +369,11 @@ public class SendMailGmail {
 
         // inline images
         Map<String, String> inlineImages = new HashMap<String, String>();
-        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera
-        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie
+//        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera localhost
+//        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie localhost
+        
+        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera DigitalOcean
+        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie cabecera DigitalOcean
 
         try {
             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
@@ -403,8 +414,11 @@ public class SendMailGmail {
 
         // inline images
         Map<String, String> inlineImages = new HashMap<String, String>();
-        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera
-        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie
+//        inlineImages.put("image1", "D:/Eilfil/Imágenes/plantillaCabecera.png");//Imagen de cabecera localhost
+//        inlineImages.put("image2", "D:/Eilfil/Imágenes/plantillaPie.png");//Imagen de pie localhost
+        
+        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera DigitalOcean
+        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie cabecera DigitalOcean
 
         try {
             send(host, port, correoEnvia, claveCorreo, mailTo, subject, body.toString(), inlineImages);
@@ -438,11 +452,11 @@ public class SendMailGmail {
 //
 //        // inline images
 //        Map<String, String> inlineImages = new HashMap<String, String>();
-////        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera
-////        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie
+//        inlineImages.put("image1", "/root/plantillaCabecera.png");//Imagen de cabecera
+//        inlineImages.put("image2", "/root/plantillaPie.png");//Imagen de pie
 //
-//        inlineImages.put("image1", "https://ibb.co/f06yLB8");//Imagen de cabecera
-//        inlineImages.put("image2", "https://ibb.co/gSf3WLw");//Imagen de pie
+////        inlineImages.put("image1", "https://ibb.co/f06yLB8");//Imagen de cabecera
+////        inlineImages.put("image2", "https://ibb.co/gSf3WLw");//Imagen de pie
 //        try {
 //            System.out.println("host: "+host+" port: "+port+" correo Envia: "+correoEnvia+ " claveCorreo: "
 //                    +claveCorreo+" mailTo: "+mailTo+" subject: "+subject);
